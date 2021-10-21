@@ -1,3 +1,7 @@
+* {
+    font-family: 'PT Mono', monospace;
+}
+
 body {
     height: 100vh;
 }
@@ -17,4 +21,9 @@ body {
 
 input {
     width: 392px;
+}
+
+a {
+    text-decoration: underline;
+    color: black;
 }

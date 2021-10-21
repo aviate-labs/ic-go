@@ -1,6 +1,6 @@
 {
   "canisters": {
-    "go_assets": {
+    "example": {
       "frontend": {
         "entrypoint": "src/go_assets/src/index.html"
       },
