@@ -2,5 +2,5 @@
 node_modules/
 dist/
 
-src/go_assets/src/wasm_exec.js
-src/go_assets/assets/main.wasm
+src/example/src/wasm_exec.js
+src/example/assets/main.wasm

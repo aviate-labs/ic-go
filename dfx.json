@@ -2,11 +2,11 @@
   "canisters": {
     "example": {
       "frontend": {
-        "entrypoint": "src/go_assets/src/index.html"
+        "entrypoint": "src/example/src/index.html"
       },
       "source": [
-        "src/go_assets/assets",
-        "src/go_assets/src"
+        "src/example/assets",
+        "src/example/src"
       ],
       "type": "assets"
     }
