@@ -2,9 +2,10 @@
 
 ![banner](./banner.png)
 
-Golang on the Internat Computer, yes, from now on it is a thing. This repository contains of the ways of how you could do it.
+Running Golang on the Internat Computer?! Yes, it is possible!
+This repository contains a simple example that shows how you can do it.
 
-I used the [GOvatar](https://pkg.go.dev/github.com/o1egl/govatar@v0.4.1#section-readme) package (written in Golang) to generate avatars, as an example. All served from the Internet Computer. All written in Golang.
+I used the [GOvatar](https://pkg.go.dev/github.com/o1egl/govatar@v0.4.1#section-readme) package (written in Golang) to generate avatars. All served from the Internet Computer. All written in Golang.
 
 ## Prerequisites
 
