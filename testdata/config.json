@@ -1,0 +1,30 @@
+{
+  "args": {
+    "ic": "https://raw.githubusercontent.com/dfinity/ic/release-2024-12-06_03-16-base",
+    "portal": "https://raw.githubusercontent.com/dfinity/portal/master",
+    "sdk": "https://raw.githubusercontent.com/dfinity/sdk/0.24.3",
+    "icrc1": "https://raw.githubusercontent.com/dfinity/ICRC-1/master"
+  },
+  "candid": "testdata/did",
+  "locations": {
+    "": {
+      "assetstorage": "sdk://src/distributed/assetstorage.did",
+      "cmc": "ic://rs/nns/cmc/cmc.did",
+      "ic0": "portal://docs/references/_attachments/ic.did",
+      "registry": "ic://rs/registry/canister/canister/registry.did",
+      "governance": "ic://rs/nns/governance/canister/governance.did",
+      "icparchive": "ic://rs/ledger_suite/icp/ledger_archive.did",
+      "icpledger": "ic://rs/ledger_suite/icp/ledger.did",
+      "icrc1":  "icrc1://standards/ICRC-1/ICRC-1.did",
+      "wallet": "sdk://src/distributed/wallet.did"
+    },
+    "sns": {
+      "sns": "ic://rs/nns/sns-wasm/canister/sns-wasm.did",
+      "governance": "ic://rs/sns/governance/canister/governance.did",
+      "root": "ic://rs/sns/root/canister/root.did",
+      "swap": "ic://rs/sns/swap/canister/swap.did",
+      "ledger": "ic://rs/ledger_suite/icrc1/ledger/ledger.did",
+      "index": "ic://rs/ledger_suite/icrc1/index/index.did"
+    }
+  }
+}
