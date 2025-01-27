@@ -77,7 +77,7 @@ func main() {
 				}
 			}
 
-			g, err := gen.NewGenerator("", name, name, l.CandidRaw)
+			g, err := gen.NewGenerator("", name, name, bytes.Runes(l.CandidRaw))
 			if err != nil {
 				log.Fatal(err)
 			}

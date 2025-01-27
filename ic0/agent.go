@@ -1171,6 +1171,12 @@ type SchnorrAlgorithm struct {
 	Ed25519         *idl.Null `ic:"ed25519,variant"`
 }
 
+type SchnorrAux struct {
+	Bip341 *struct {
+		MerkleRootHash []byte `ic:"merkle_root_hash" json:"merkle_root_hash"`
+	} `ic:"bip341,variant"`
+}
+
 type SchnorrPublicKeyArgs struct {
 	CanisterId     *CanisterId `ic:"canister_id,omitempty" json:"canister_id,omitempty"`
 	DerivationPath [][]byte    `ic:"derivation_path" json:"derivation_path"`
@@ -1205,6 +1211,7 @@ type SignWithSchnorrArgs struct {
 		Algorithm SchnorrAlgorithm `ic:"algorithm" json:"algorithm"`
 		Name      string           `ic:"name" json:"name"`
 	} `ic:"key_id" json:"key_id"`
+	Aux *SchnorrAux `ic:"aux,omitempty" json:"aux,omitempty"`
 }
 
 type SignWithSchnorrResult struct {
