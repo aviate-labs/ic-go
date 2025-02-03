@@ -2,9 +2,10 @@ module github.com/aviate-labs/ic-go
 
 go 1.23.4
 
-require github.com/aviate-labs/agent-go v0.6.2
+require github.com/aviate-labs/agent-go v0.6.3
 
 require (
+	github.com/0x51-dev/upeg v0.1.5 // indirect
 	github.com/aviate-labs/leb128 v0.3.0 // indirect
 	github.com/aviate-labs/secp256k1 v0.0.0-5e6736a // indirect
 	github.com/bits-and-blooms/bitset v1.20.0 // indirect

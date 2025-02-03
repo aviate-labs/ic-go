@@ -730,9 +730,8 @@ type StreamingCallbackHttpResponse struct {
 
 type StreamingStrategy struct {
 	Callback *struct {
-		Callback struct { /* NOT SUPPORTED */
-		} `ic:"callback" json:"callback"`
-		Token Token `ic:"token" json:"token"`
+		Callback idl.Function `ic:"callback" json:"callback"`
+		Token    Token        `ic:"token" json:"token"`
 	} `ic:"Callback,variant"`
 }
 

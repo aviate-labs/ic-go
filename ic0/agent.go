@@ -1075,9 +1075,8 @@ type HttpRequestArgs struct {
 	Headers   []HttpHeader `ic:"headers" json:"headers"`
 	Body      *[]byte      `ic:"body,omitempty" json:"body,omitempty"`
 	Transform *struct {
-		Function struct { /* NOT SUPPORTED */
-		} `ic:"function" json:"function"`
-		Context []byte `ic:"context" json:"context"`
+		Function idl.Function `ic:"function" json:"function"`
+		Context  []byte       `ic:"context" json:"context"`
 	} `ic:"transform,omitempty" json:"transform,omitempty"`
 }
 

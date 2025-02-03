@@ -1,7 +1,7 @@
 github.com/0x51-dev/upeg v0.1.5 h1:wbggXZSJbI0ln+5sy77Y/y+1d6fB41VoA6J/840+6Cc=
 github.com/0x51-dev/upeg v0.1.5/go.mod h1:ts9/Zafxb9W9drZFTmQNMR7kLOyHyBw37NuowyiDork=
-github.com/aviate-labs/agent-go v0.6.2 h1:H6hjn7074nINSEeGnuE/UNPpJ/YIIq+ub2WMwRXLb/4=
-github.com/aviate-labs/agent-go v0.6.2/go.mod h1:SR+iOBHwN9aK1WQid94LhsJXe/nXpnzV3OhgFn1leO4=
+github.com/aviate-labs/agent-go v0.6.3 h1:ik8cQbLIezBw+02vEGGfDJCroImpJiUP4Luj21w8ssI=
+github.com/aviate-labs/agent-go v0.6.3/go.mod h1:SR+iOBHwN9aK1WQid94LhsJXe/nXpnzV3OhgFn1leO4=
 github.com/aviate-labs/leb128 v0.3.0 h1:s9htRv3OYk8nuHqJu9PiVFJxv1jIUTIcpEeiURa91uQ=
 github.com/aviate-labs/leb128 v0.3.0/go.mod h1:GclhBOjhIKmcDlgHKhj0AEZollzERfZUbcRUKiQVqgY=
 github.com/aviate-labs/secp256k1 v0.0.0-5e6736a h1:aQkG/D+l8Y7tr809l8pN+KebH2jzacWReSFQmeEKFgM=

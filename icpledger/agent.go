@@ -524,10 +524,9 @@ type ArchivedBlocksRange struct {
 }
 
 type ArchivedEncodedBlocksRange struct {
-	Callback struct { /* NOT SUPPORTED */
-	} `ic:"callback" json:"callback"`
-	Start  uint64 `ic:"start" json:"start"`
-	Length uint64 `ic:"length" json:"length"`
+	Callback idl.Function `ic:"callback" json:"callback"`
+	Start    uint64       `ic:"start" json:"start"`
+	Length   uint64       `ic:"length" json:"length"`
 }
 
 type Archives struct {
@@ -715,8 +714,7 @@ type QueryArchiveError struct {
 	} `ic:"Other,variant"`
 }
 
-type QueryArchiveFn struct { /* NOT SUPPORTED */
-}
+type QueryArchiveFn = idl.Function
 
 type QueryArchiveResult struct {
 	Ok  *BlockRange        `ic:"Ok,variant"`

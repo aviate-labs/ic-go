@@ -533,8 +533,7 @@ type GetBlocksResult struct {
 	} `ic:"blocks" json:"blocks"`
 	ArchivedBlocks []struct {
 		Args     []GetBlocksArgs `ic:"args" json:"args"`
-		Callback struct { /* NOT SUPPORTED */
-		} `ic:"callback" json:"callback"`
+		Callback idl.Function    `ic:"callback" json:"callback"`
 	} `ic:"archived_blocks" json:"archived_blocks"`
 }
 
@@ -700,11 +699,9 @@ type Mint struct {
 	Amount        idl.Nat    `ic:"amount" json:"amount"`
 }
 
-type QueryArchiveFn struct { /* NOT SUPPORTED */
-}
+type QueryArchiveFn = idl.Function
 
-type QueryBlockArchiveFn struct { /* NOT SUPPORTED */
-}
+type QueryBlockArchiveFn = idl.Function
 
 type StandardRecord struct {
 	Url  string `ic:"url" json:"url"`
