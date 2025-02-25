@@ -10,7 +10,7 @@ import (
 
 type Account struct {
 	Owner      principal.Principal `ic:"owner" json:"owner"`
-	Subaccount *[]byte             `ic:"subaccount,omitempty" json:"subaccount,omitempty"`
+	Subaccount *SubAccount         `ic:"subaccount,omitempty" json:"subaccount,omitempty"`
 }
 
 // Agent is a client for the "index" canister.
@@ -34,9 +34,51 @@ func NewAgent(canisterId principal.Principal, config agent.Config) (*Agent, erro
 // GetAccountTransactions calls the "get_account_transactions" method on the "index" canister.
 func (a Agent) GetAccountTransactions(arg0 GetAccountTransactionsArgs) (*GetTransactionsResult, error) {
 	var r0 GetTransactionsResult
-	if err := a.Agent.Call(
+	if err := a.Agent.Query(
 		a.CanisterId,
 		"get_account_transactions",
+		[]any{arg0},
+		[]any{&r0},
+	); err != nil {
+		return nil, err
+	}
+	return &r0, nil
+}
+
+// GetBlocks calls the "get_blocks" method on the "index" canister.
+func (a Agent) GetBlocks(arg0 GetBlocksRequest) (*GetBlocksResponse, error) {
+	var r0 GetBlocksResponse
+	if err := a.Agent.Query(
+		a.CanisterId,
+		"get_blocks",
+		[]any{arg0},
+		[]any{&r0},
+	); err != nil {
+		return nil, err
+	}
+	return &r0, nil
+}
+
+// GetFeeCollectorsRanges calls the "get_fee_collectors_ranges" method on the "index" canister.
+func (a Agent) GetFeeCollectorsRanges() (*FeeCollectorRanges, error) {
+	var r0 FeeCollectorRanges
+	if err := a.Agent.Query(
+		a.CanisterId,
+		"get_fee_collectors_ranges",
+		[]any{},
+		[]any{&r0},
+	); err != nil {
+		return nil, err
+	}
+	return &r0, nil
+}
+
+// Icrc1BalanceOf calls the "icrc1_balance_of" method on the "index" canister.
+func (a Agent) Icrc1BalanceOf(arg0 Account) (*Tokens, error) {
+	var r0 Tokens
+	if err := a.Agent.Query(
+		a.CanisterId,
+		"icrc1_balance_of",
 		[]any{arg0},
 		[]any{&r0},
 	); err != nil {
@@ -73,6 +115,20 @@ func (a Agent) ListSubaccounts(arg0 ListSubaccountsArgs) (*[]SubAccount, error) 
 	return &r0, nil
 }
 
+// Status calls the "status" method on the "index" canister.
+func (a Agent) Status() (*Status, error) {
+	var r0 Status
+	if err := a.Agent.Query(
+		a.CanisterId,
+		"status",
+		[]any{},
+		[]any{&r0},
+	); err != nil {
+		return nil, err
+	}
+	return &r0, nil
+}
+
 type Approve struct {
 	Fee               *idl.Nat `ic:"fee,omitempty" json:"fee,omitempty"`
 	From              Account  `ic:"from" json:"from"`
@@ -84,6 +140,10 @@ type Approve struct {
 	Spender           Account  `ic:"spender" json:"spender"`
 }
 
+type Block = Value
+
+type BlockIndex = idl.Nat
+
 type Burn struct {
 	From          Account  `ic:"from" json:"from"`
 	Memo          *[]uint8 `ic:"memo,omitempty" json:"memo,omitempty"`
@@ -92,15 +152,36 @@ type Burn struct {
 	Spender       *Account `ic:"spender,omitempty" json:"spender,omitempty"`
 }
 
+type FeeCollectorRanges struct {
+	Ranges []struct {
+		Field0 Account `ic:"0" json:"0"`
+		Field1 []struct {
+			Field0 BlockIndex `ic:"0" json:"0"`
+			Field1 BlockIndex `ic:"1" json:"1"`
+		} `ic:"1" json:"1"`
+	} `ic:"ranges" json:"ranges"`
+}
+
 type GetAccountTransactionsArgs struct {
-	Account    Account `ic:"account" json:"account"`
-	Start      *TxId   `ic:"start,omitempty" json:"start,omitempty"`
-	MaxResults idl.Nat `ic:"max_results" json:"max_results"`
+	Account    Account     `ic:"account" json:"account"`
+	Start      *BlockIndex `ic:"start,omitempty" json:"start,omitempty"`
+	MaxResults idl.Nat     `ic:"max_results" json:"max_results"`
+}
+
+type GetBlocksRequest struct {
+	Start  idl.Nat `ic:"start" json:"start"`
+	Length idl.Nat `ic:"length" json:"length"`
+}
+
+type GetBlocksResponse struct {
+	ChainLength uint64  `ic:"chain_length" json:"chain_length"`
+	Blocks      []Block `ic:"blocks" json:"blocks"`
 }
 
 type GetTransactions struct {
+	Balance      Tokens              `ic:"balance" json:"balance"`
 	Transactions []TransactionWithId `ic:"transactions" json:"transactions"`
-	OldestTxId   *TxId               `ic:"oldest_tx_id,omitempty" json:"oldest_tx_id,omitempty"`
+	OldestTxId   *BlockIndex         `ic:"oldest_tx_id,omitempty" json:"oldest_tx_id,omitempty"`
 }
 
 type GetTransactionsErr struct {
@@ -108,17 +189,28 @@ type GetTransactionsErr struct {
 }
 
 type GetTransactionsResult struct {
-	Ok  *GetTransactions    `ic:"Ok,variant"`
-	Err *GetTransactionsErr `ic:"Err,variant"`
+	Ok  *GetTransactions    `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GetTransactionsErr `ic:"Err,variant" json:"Err,omitempty"`
 }
 
-type InitArgs struct {
-	LedgerId principal.Principal `ic:"ledger_id" json:"ledger_id"`
+type IndexArg struct {
+	Init    *InitArg    `ic:"Init,variant" json:"Init,omitempty"`
+	Upgrade *UpgradeArg `ic:"Upgrade,variant" json:"Upgrade,omitempty"`
+}
+
+type InitArg struct {
+	LedgerId                                principal.Principal `ic:"ledger_id" json:"ledger_id"`
+	RetrieveBlocksFromLedgerIntervalSeconds *uint64             `ic:"retrieve_blocks_from_ledger_interval_seconds,omitempty" json:"retrieve_blocks_from_ledger_interval_seconds,omitempty"`
 }
 
 type ListSubaccountsArgs struct {
 	Owner principal.Principal `ic:"owner" json:"owner"`
 	Start *SubAccount         `ic:"start,omitempty" json:"start,omitempty"`
+}
+
+type Map = []struct {
+	Field0 string `ic:"0" json:"0"`
+	Field1 Value  `ic:"1" json:"1"`
 }
 
 type Mint struct {
@@ -128,7 +220,13 @@ type Mint struct {
 	Amount        idl.Nat  `ic:"amount" json:"amount"`
 }
 
+type Status struct {
+	NumBlocksSynced BlockIndex `ic:"num_blocks_synced" json:"num_blocks_synced"`
+}
+
 type SubAccount = []byte
+
+type Tokens = idl.Nat
 
 type Transaction struct {
 	Burn      *Burn     `ic:"burn,omitempty" json:"burn,omitempty"`
@@ -140,7 +238,7 @@ type Transaction struct {
 }
 
 type TransactionWithId struct {
-	Id          TxId        `ic:"id" json:"id"`
+	Id          BlockIndex  `ic:"id" json:"id"`
 	Transaction Transaction `ic:"transaction" json:"transaction"`
 }
 
@@ -154,4 +252,17 @@ type Transfer struct {
 	Spender       *Account `ic:"spender,omitempty" json:"spender,omitempty"`
 }
 
-type TxId = idl.Nat
+type UpgradeArg struct {
+	LedgerId                                *principal.Principal `ic:"ledger_id,omitempty" json:"ledger_id,omitempty"`
+	RetrieveBlocksFromLedgerIntervalSeconds *uint64              `ic:"retrieve_blocks_from_ledger_interval_seconds,omitempty" json:"retrieve_blocks_from_ledger_interval_seconds,omitempty"`
+}
+
+type Value struct {
+	Blob  *[]byte  `ic:"Blob,variant" json:"Blob,omitempty"`
+	Text  *string  `ic:"Text,variant" json:"Text,omitempty"`
+	Nat   *idl.Nat `ic:"Nat,variant" json:"Nat,omitempty"`
+	Nat64 *uint64  `ic:"Nat64,variant" json:"Nat64,omitempty"`
+	Int   *idl.Int `ic:"Int,variant" json:"Int,omitempty"`
+	Array *[]Value `ic:"Array,variant" json:"Array,omitempty"`
+	Map   *Map     `ic:"Map,variant" json:"Map,omitempty"`
+}

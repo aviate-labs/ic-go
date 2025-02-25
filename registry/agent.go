@@ -707,7 +707,6 @@ type CreateSubnetPayload struct {
 	GossipPfnEvaluationPeriodMs     uint32                 `ic:"gossip_pfn_evaluation_period_ms" json:"gossip_pfn_evaluation_period_ms"`
 	MaxIngressMessagesPerBlock      uint64                 `ic:"max_ingress_messages_per_block" json:"max_ingress_messages_per_block"`
 	MaxNumberOfCanisters            uint64                 `ic:"max_number_of_canisters" json:"max_number_of_canisters"`
-	EcdsaConfig                     *EcdsaInitialConfig    `ic:"ecdsa_config,omitempty" json:"ecdsa_config,omitempty"`
 	ChainKeyConfig                  *InitialChainKeyConfig `ic:"chain_key_config,omitempty" json:"chain_key_config,omitempty"`
 	GossipMaxArtifactStreamsPerPeer uint32                 `ic:"gossip_max_artifact_streams_per_peer" json:"gossip_max_artifact_streams_per_peer"`
 	ReplicaVersionId                string                 `ic:"replica_version_id" json:"replica_version_id"`
@@ -761,7 +760,7 @@ type EcdsaConfig struct {
 }
 
 type EcdsaCurve struct {
-	Secp256k1 *idl.Null `ic:"secp256k1,variant"`
+	Secp256k1 *idl.Null `ic:"secp256k1,variant" json:"secp256k1,omitempty"`
 }
 
 type EcdsaInitialConfig struct {
@@ -793,32 +792,32 @@ type FirewallRule struct {
 }
 
 type FirewallRulesScope struct {
-	Node             *principal.Principal `ic:"Node,variant"`
-	ReplicaNodes     *idl.Null            `ic:"ReplicaNodes,variant"`
-	ApiBoundaryNodes *idl.Null            `ic:"ApiBoundaryNodes,variant"`
-	Subnet           *principal.Principal `ic:"Subnet,variant"`
-	Global           *idl.Null            `ic:"Global,variant"`
+	Node             *principal.Principal `ic:"Node,variant" json:"Node,omitempty"`
+	ReplicaNodes     *idl.Null            `ic:"ReplicaNodes,variant" json:"ReplicaNodes,omitempty"`
+	ApiBoundaryNodes *idl.Null            `ic:"ApiBoundaryNodes,variant" json:"ApiBoundaryNodes,omitempty"`
+	Subnet           *principal.Principal `ic:"Subnet,variant" json:"Subnet,omitempty"`
+	Global           *idl.Null            `ic:"Global,variant" json:"Global,omitempty"`
 }
 
 type GetApiBoundaryNodeIdsRequest struct {
 }
 
 type GetApiBoundaryNodeIdsResponse struct {
-	Ok  *[]ApiBoundaryNodeIdRecord `ic:"Ok,variant"`
-	Err *string                    `ic:"Err,variant"`
+	Ok  *[]ApiBoundaryNodeIdRecord `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string                    `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type GetNodeOperatorsAndDcsOfNodeProviderResponse struct {
 	Ok *[]struct {
 		Field0 DataCenterRecord   `ic:"0" json:"0"`
 		Field1 NodeOperatorRecord `ic:"1" json:"1"`
-	} `ic:"Ok,variant"`
-	Err *string `ic:"Err,variant"`
+	} `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type GetNodeProvidersMonthlyXdrRewardsResponse struct {
-	Ok  *NodeProvidersMonthlyXdrRewards `ic:"Ok,variant"`
-	Err *string                         `ic:"Err,variant"`
+	Ok  *NodeProvidersMonthlyXdrRewards `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string                         `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type GetSubnetForCanisterRequest struct {
@@ -828,8 +827,8 @@ type GetSubnetForCanisterRequest struct {
 type GetSubnetForCanisterResponse struct {
 	Ok *struct {
 		SubnetId *principal.Principal `ic:"subnet_id,omitempty" json:"subnet_id,omitempty"`
-	} `ic:"Ok,variant"`
-	Err *string `ic:"Err,variant"`
+	} `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Gps struct {
@@ -861,9 +860,13 @@ type KeyConfigRequest struct {
 }
 
 type MasterPublicKeyId struct {
-	Schnorr *SchnorrKeyId `ic:"Schnorr,variant"`
-	Ecdsa   *EcdsaKeyId   `ic:"Ecdsa,variant"`
-	VetKd   *VetKdKeyId   `ic:"VetKd,variant"`
+	Schnorr *SchnorrKeyId `ic:"Schnorr,variant" json:"Schnorr,omitempty"`
+	Ecdsa   *EcdsaKeyId   `ic:"Ecdsa,variant" json:"Ecdsa,omitempty"`
+	VetKd   *VetKdKeyId   `ic:"VetKd,variant" json:"VetKd,omitempty"`
+}
+
+type NodeOperatorPrincipals struct {
+	Principals []principal.Principal `ic:"principals" json:"principals"`
 }
 
 type NodeOperatorRecord struct {
@@ -913,7 +916,6 @@ type RecoverSubnetPayload struct {
 		Field1 string `ic:"1" json:"1"`
 		Field2 uint64 `ic:"2" json:"2"`
 	} `ic:"registry_store_uri,omitempty" json:"registry_store_uri,omitempty"`
-	EcdsaConfig    *EcdsaInitialConfig    `ic:"ecdsa_config,omitempty" json:"ecdsa_config,omitempty"`
 	ChainKeyConfig *InitialChainKeyConfig `ic:"chain_key_config,omitempty" json:"chain_key_config,omitempty"`
 	StateHash      []byte                 `ic:"state_hash" json:"state_hash"`
 	TimeNs         uint64                 `ic:"time_ns" json:"time_ns"`
@@ -934,7 +936,8 @@ type RemoveNodeDirectlyPayload struct {
 }
 
 type RemoveNodeOperatorsPayload struct {
-	NodeOperatorsToRemove [][]byte `ic:"node_operators_to_remove" json:"node_operators_to_remove"`
+	NodeOperatorsToRemove          [][]byte                `ic:"node_operators_to_remove" json:"node_operators_to_remove"`
+	NodeOperatorPrincipalsToRemove *NodeOperatorPrincipals `ic:"node_operator_principals_to_remove,omitempty" json:"node_operator_principals_to_remove,omitempty"`
 }
 
 type RemoveNodesFromSubnetPayload struct {
@@ -967,8 +970,8 @@ type ReviseElectedHostosVersionsPayload struct {
 }
 
 type SchnorrAlgorithm struct {
-	Ed25519         *idl.Null `ic:"ed25519,variant"`
-	Bip340secp256k1 *idl.Null `ic:"bip340secp256k1,variant"`
+	Ed25519         *idl.Null `ic:"ed25519,variant" json:"ed25519,omitempty"`
+	Bip340secp256k1 *idl.Null `ic:"bip340secp256k1,variant" json:"bip340secp256k1,omitempty"`
 }
 
 type SchnorrKeyId struct {
@@ -989,9 +992,9 @@ type SubnetFeatures struct {
 }
 
 type SubnetType struct {
-	Application         *idl.Null `ic:"application,variant"`
-	VerifiedApplication *idl.Null `ic:"verified_application,variant"`
-	System              *idl.Null `ic:"system,variant"`
+	Application         *idl.Null `ic:"application,variant" json:"application,omitempty"`
+	VerifiedApplication *idl.Null `ic:"verified_application,variant" json:"verified_application,omitempty"`
+	System              *idl.Null `ic:"system,variant" json:"system,omitempty"`
 }
 
 type UpdateApiBoundaryNodesVersionPayload struct {
@@ -1023,8 +1026,8 @@ type UpdateNodeDomainDirectlyPayload struct {
 }
 
 type UpdateNodeDomainDirectlyResponse struct {
-	Ok  *idl.Null `ic:"Ok,variant"`
-	Err *string   `ic:"Err,variant"`
+	Ok  *idl.Null `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string   `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type UpdateNodeIPv4ConfigDirectlyPayload struct {
@@ -1033,8 +1036,8 @@ type UpdateNodeIPv4ConfigDirectlyPayload struct {
 }
 
 type UpdateNodeIpv4ConfigDirectlyResponse struct {
-	Ok  *idl.Null `ic:"Ok,variant"`
-	Err *string   `ic:"Err,variant"`
+	Ok  *idl.Null `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string   `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type UpdateNodeOperatorConfigDirectlyPayload struct {
@@ -1100,9 +1103,6 @@ type UpdateSubnetPayload struct {
 	ChainKeyConfig             *ChainKeyConfig      `ic:"chain_key_config,omitempty" json:"chain_key_config,omitempty"`
 	ChainKeySigningEnable      *[]MasterPublicKeyId `ic:"chain_key_signing_enable,omitempty" json:"chain_key_signing_enable,omitempty"`
 	ChainKeySigningDisable     *[]MasterPublicKeyId `ic:"chain_key_signing_disable,omitempty" json:"chain_key_signing_disable,omitempty"`
-	EcdsaConfig                *EcdsaConfig         `ic:"ecdsa_config,omitempty" json:"ecdsa_config,omitempty"`
-	EcdsaKeySigningEnable      *[]EcdsaKeyId        `ic:"ecdsa_key_signing_enable,omitempty" json:"ecdsa_key_signing_enable,omitempty"`
-	EcdsaKeySigningDisable     *[]EcdsaKeyId        `ic:"ecdsa_key_signing_disable,omitempty" json:"ecdsa_key_signing_disable,omitempty"`
 }
 
 type UpdateUnassignedNodesConfigPayload struct {
@@ -1111,7 +1111,7 @@ type UpdateUnassignedNodesConfigPayload struct {
 }
 
 type VetKdCurve struct {
-	Bls12381G2 *idl.Null `ic:"bls12_381_g2,variant"`
+	Bls12381G2 *idl.Null `ic:"bls12_381_g2,variant" json:"bls12_381_g2,omitempty"`
 }
 
 type VetKdKeyId struct {

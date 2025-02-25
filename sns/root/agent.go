@@ -198,9 +198,9 @@ type CanisterIdRecord struct {
 }
 
 type CanisterInstallMode struct {
-	Reinstall *idl.Null `ic:"reinstall,variant"`
-	Upgrade   *idl.Null `ic:"upgrade,variant"`
-	Install   *idl.Null `ic:"install,variant"`
+	Reinstall *idl.Null `ic:"reinstall,variant" json:"reinstall,omitempty"`
+	Upgrade   *idl.Null `ic:"upgrade,variant" json:"upgrade,omitempty"`
+	Install   *idl.Null `ic:"install,variant" json:"install,omitempty"`
 }
 
 type CanisterStatusResult struct {
@@ -211,6 +211,7 @@ type CanisterStatusResult struct {
 	IdleCyclesBurnedPerDay *idl.Nat                 `ic:"idle_cycles_burned_per_day,omitempty" json:"idle_cycles_burned_per_day,omitempty"`
 	ModuleHash             *[]byte                  `ic:"module_hash,omitempty" json:"module_hash,omitempty"`
 	ReservedCycles         *idl.Nat                 `ic:"reserved_cycles,omitempty" json:"reserved_cycles,omitempty"`
+	QueryStats             *QueryStats              `ic:"query_stats,omitempty" json:"query_stats,omitempty"`
 }
 
 type CanisterStatusResultV2 struct {
@@ -220,12 +221,13 @@ type CanisterStatusResultV2 struct {
 	Settings               DefiniteCanisterSettingsArgs `ic:"settings" json:"settings"`
 	IdleCyclesBurnedPerDay idl.Nat                      `ic:"idle_cycles_burned_per_day" json:"idle_cycles_burned_per_day"`
 	ModuleHash             *[]byte                      `ic:"module_hash,omitempty" json:"module_hash,omitempty"`
+	QueryStats             *QueryStats                  `ic:"query_stats,omitempty" json:"query_stats,omitempty"`
 }
 
 type CanisterStatusType struct {
-	Stopped  *idl.Null `ic:"stopped,variant"`
-	Stopping *idl.Null `ic:"stopping,variant"`
-	Running  *idl.Null `ic:"running,variant"`
+	Stopped  *idl.Null `ic:"stopped,variant" json:"stopped,omitempty"`
+	Stopping *idl.Null `ic:"stopping,variant" json:"stopping,omitempty"`
+	Running  *idl.Null `ic:"running,variant" json:"running,omitempty"`
 }
 
 type CanisterSummary struct {
@@ -234,13 +236,20 @@ type CanisterSummary struct {
 }
 
 type ChangeCanisterRequest struct {
-	Arg                  []byte              `ic:"arg" json:"arg"`
-	WasmModule           []byte              `ic:"wasm_module" json:"wasm_module"`
-	StopBeforeInstalling bool                `ic:"stop_before_installing" json:"stop_before_installing"`
-	Mode                 CanisterInstallMode `ic:"mode" json:"mode"`
-	CanisterId           principal.Principal `ic:"canister_id" json:"canister_id"`
-	MemoryAllocation     *idl.Nat            `ic:"memory_allocation,omitempty" json:"memory_allocation,omitempty"`
-	ComputeAllocation    *idl.Nat            `ic:"compute_allocation,omitempty" json:"compute_allocation,omitempty"`
+	Arg                  []byte               `ic:"arg" json:"arg"`
+	WasmModule           []byte               `ic:"wasm_module" json:"wasm_module"`
+	ChunkedCanisterWasm  *ChunkedCanisterWasm `ic:"chunked_canister_wasm,omitempty" json:"chunked_canister_wasm,omitempty"`
+	StopBeforeInstalling bool                 `ic:"stop_before_installing" json:"stop_before_installing"`
+	Mode                 CanisterInstallMode  `ic:"mode" json:"mode"`
+	CanisterId           principal.Principal  `ic:"canister_id" json:"canister_id"`
+	MemoryAllocation     *idl.Nat             `ic:"memory_allocation,omitempty" json:"memory_allocation,omitempty"`
+	ComputeAllocation    *idl.Nat             `ic:"compute_allocation,omitempty" json:"compute_allocation,omitempty"`
+}
+
+type ChunkedCanisterWasm struct {
+	WasmModuleHash  []byte              `ic:"wasm_module_hash" json:"wasm_module_hash"`
+	StoreCanisterId principal.Principal `ic:"store_canister_id" json:"store_canister_id"`
+	ChunkHashesList [][]byte            `ic:"chunk_hashes_list" json:"chunk_hashes_list"`
 }
 
 type DefiniteCanisterSettings struct {
@@ -251,14 +260,16 @@ type DefiniteCanisterSettings struct {
 	WasmMemoryLimit     *idl.Nat              `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
 	MemoryAllocation    *idl.Nat              `ic:"memory_allocation,omitempty" json:"memory_allocation,omitempty"`
 	ComputeAllocation   *idl.Nat              `ic:"compute_allocation,omitempty" json:"compute_allocation,omitempty"`
+	WasmMemoryThreshold *idl.Nat              `ic:"wasm_memory_threshold,omitempty" json:"wasm_memory_threshold,omitempty"`
 }
 
 type DefiniteCanisterSettingsArgs struct {
-	FreezingThreshold idl.Nat               `ic:"freezing_threshold" json:"freezing_threshold"`
-	Controllers       []principal.Principal `ic:"controllers" json:"controllers"`
-	WasmMemoryLimit   *idl.Nat              `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
-	MemoryAllocation  idl.Nat               `ic:"memory_allocation" json:"memory_allocation"`
-	ComputeAllocation idl.Nat               `ic:"compute_allocation" json:"compute_allocation"`
+	FreezingThreshold   idl.Nat               `ic:"freezing_threshold" json:"freezing_threshold"`
+	Controllers         []principal.Principal `ic:"controllers" json:"controllers"`
+	WasmMemoryLimit     *idl.Nat              `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
+	MemoryAllocation    idl.Nat               `ic:"memory_allocation" json:"memory_allocation"`
+	ComputeAllocation   idl.Nat               `ic:"compute_allocation" json:"compute_allocation"`
+	WasmMemoryThreshold *idl.Nat              `ic:"wasm_memory_threshold,omitempty" json:"wasm_memory_threshold,omitempty"`
 }
 
 type FailedUpdate struct {
@@ -295,8 +306,9 @@ type ListSnsCanistersResponse struct {
 }
 
 type LogVisibility struct {
-	Controllers *idl.Null `ic:"controllers,variant"`
-	Public      *idl.Null `ic:"public,variant"`
+	Controllers    *idl.Null              `ic:"controllers,variant" json:"controllers,omitempty"`
+	Public         *idl.Null              `ic:"public,variant" json:"public,omitempty"`
+	AllowedViewers *[]principal.Principal `ic:"allowed_viewers,variant" json:"allowed_viewers,omitempty"`
 }
 
 type ManageDappCanisterSettingsRequest struct {
@@ -307,10 +319,18 @@ type ManageDappCanisterSettingsRequest struct {
 	WasmMemoryLimit     *uint64               `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
 	MemoryAllocation    *uint64               `ic:"memory_allocation,omitempty" json:"memory_allocation,omitempty"`
 	ComputeAllocation   *uint64               `ic:"compute_allocation,omitempty" json:"compute_allocation,omitempty"`
+	WasmMemoryThreshold *uint64               `ic:"wasm_memory_threshold,omitempty" json:"wasm_memory_threshold,omitempty"`
 }
 
 type ManageDappCanisterSettingsResponse struct {
 	FailureReason *string `ic:"failure_reason,omitempty" json:"failure_reason,omitempty"`
+}
+
+type QueryStats struct {
+	NumCallsTotal             *idl.Nat `ic:"num_calls_total,omitempty" json:"num_calls_total,omitempty"`
+	NumInstructionsTotal      *idl.Nat `ic:"num_instructions_total,omitempty" json:"num_instructions_total,omitempty"`
+	RequestPayloadBytesTotal  *idl.Nat `ic:"request_payload_bytes_total,omitempty" json:"request_payload_bytes_total,omitempty"`
+	ResponsePayloadBytesTotal *idl.Nat `ic:"response_payload_bytes_total,omitempty" json:"response_payload_bytes_total,omitempty"`
 }
 
 type RegisterDappCanisterRequest struct {

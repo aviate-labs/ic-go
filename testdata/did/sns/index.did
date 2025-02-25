@@ -1,8 +1,55 @@
-type TxId = nat;
+type Tokens = nat;
 
-type Account = record { owner : principal; subaccount : opt blob };
+type InitArg = record {
+    ledger_id: principal;
+    // The interval in seconds in which to retrieve blocks from the ledger. A lower value makes the index more
+    // responsive in showing new blocks, but increases the consumption of cycles of both the index and ledger canisters.
+    // A higher values means that it takes longer for new blocks to show up in the index.
+    retrieve_blocks_from_ledger_interval_seconds : opt nat64;
+};
+
+type UpgradeArg = record {
+    ledger_id: opt principal;
+    // The interval in seconds in which to retrieve blocks from the ledger. A lower value makes the index more
+    // responsive in showing new blocks, but increases the consumption of cycles of both the index and ledger canisters.
+    // A higher values means that it takes longer for new blocks to show up in the index.
+    retrieve_blocks_from_ledger_interval_seconds : opt nat64;
+};
+
+type IndexArg = variant {
+    Init: InitArg;
+    Upgrade: UpgradeArg;
+};
+
+type GetBlocksRequest = record {
+    start : nat;
+    length : nat;
+};
+
+type Value = variant {
+    Blob : blob;
+    Text : text;
+    Nat : nat;
+    Nat64: nat64;
+    Int : int;
+    Array : vec Value;
+    Map : Map;
+};
+
+type Map = vec record { text; Value };
+
+type Block = Value;
+
+type GetBlocksResponse = record {
+    chain_length: nat64;
+    blocks: vec Block;
+};
+
+type BlockIndex = nat;
 
 type SubAccount = blob;
+
+type Account = record { owner : principal; subaccount : opt SubAccount };
 
 type Transaction = record {
   burn : opt Burn;
@@ -53,21 +100,23 @@ type GetAccountTransactionsArgs = record {
     account : Account;
     // The txid of the last transaction seen by the client.
     // If None then the results will start from the most recent
-    // txid.
-    start : opt TxId;
+    // txid. If set then the results will start from the next
+    // most recent txid after start (start won't be included).
+    start : opt BlockIndex;
     // Maximum number of transactions to fetch.
     max_results : nat;
 };
 
 type TransactionWithId = record {
-  id : TxId;
+  id : BlockIndex;
   transaction : Transaction;
 };
 
 type GetTransactions = record {
+  balance : Tokens;
   transactions : vec TransactionWithId;
   // The txid of the oldest transaction the account has
-  oldest_tx_id : opt TxId;
+  oldest_tx_id : opt BlockIndex;
 };
 
 type GetTransactionsErr = record {
@@ -84,13 +133,20 @@ type ListSubaccountsArgs = record {
     start: opt SubAccount;
 };
 
-// The initialization parameters of the Index canister.
-type InitArgs = record {
-    ledger_id : principal;
+type Status = record {
+    num_blocks_synced : BlockIndex;
 };
 
-service : (InitArgs) -> {
-  get_account_transactions : (GetAccountTransactionsArgs) -> (GetTransactionsResult);
-  ledger_id : () -> (principal) query;
-  list_subaccounts : (ListSubaccountsArgs) -> (vec SubAccount) query;
+type FeeCollectorRanges = record {
+    ranges : vec  record { Account; vec record { BlockIndex; BlockIndex } };
+}
+
+service : (index_arg: opt IndexArg) -> {
+    get_account_transactions : (GetAccountTransactionsArgs) -> (GetTransactionsResult) query;
+    get_blocks : (GetBlocksRequest) -> (GetBlocksResponse) query;
+    get_fee_collectors_ranges : () -> (FeeCollectorRanges) query;
+    icrc1_balance_of : (Account) -> (Tokens) query;
+    ledger_id : () -> (principal) query;
+    list_subaccounts : (ListSubaccountsArgs) -> (vec SubAccount) query;
+    status : () -> (Status) query;
 }

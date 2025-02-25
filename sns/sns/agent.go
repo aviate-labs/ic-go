@@ -319,8 +319,8 @@ type GetDeployedSnsByProposalIdResponse struct {
 }
 
 type GetDeployedSnsByProposalIdResult struct {
-	Error       *SnsWasmError `ic:"Error,variant"`
-	DeployedSns *DeployedSns  `ic:"DeployedSns,variant"`
+	Error       *SnsWasmError `ic:"Error,variant" json:"Error,omitempty"`
+	DeployedSns *DeployedSns  `ic:"DeployedSns,variant" json:"DeployedSns,omitempty"`
 }
 
 type GetNextSnsVersionRequest struct {
@@ -365,7 +365,7 @@ type IdealMatchedParticipationFunction struct {
 }
 
 type InitialTokenDistribution struct {
-	FractionalDeveloperVotingPower *FractionalDeveloperVotingPower `ic:"FractionalDeveloperVotingPower,variant"`
+	FractionalDeveloperVotingPower *FractionalDeveloperVotingPower `ic:"FractionalDeveloperVotingPower,variant" json:"FractionalDeveloperVotingPower,omitempty"`
 }
 
 type InsertUpgradePathEntriesRequest struct {
@@ -444,13 +444,13 @@ type PrettySnsVersion struct {
 }
 
 type Result struct {
-	Error *SnsWasmError `ic:"Error,variant"`
-	Hash  *[]byte       `ic:"Hash,variant"`
+	Error *SnsWasmError `ic:"Error,variant" json:"Error,omitempty"`
+	Hash  *[]byte       `ic:"Hash,variant" json:"Hash,omitempty"`
 }
 
 type Result1 struct {
-	Ok    *Ok           `ic:"Ok,variant"`
-	Error *SnsWasmError `ic:"Error,variant"`
+	Ok    *Ok           `ic:"Ok,variant" json:"Ok,omitempty"`
+	Error *SnsWasmError `ic:"Error,variant" json:"Error,omitempty"`
 }
 
 type SnsCanisterIds struct {
@@ -551,8 +551,8 @@ type UpdateAllowedPrincipalsResponse struct {
 }
 
 type UpdateAllowedPrincipalsResult struct {
-	Error             *SnsWasmError                 `ic:"Error,variant"`
-	AllowedPrincipals *GetAllowedPrincipalsResponse `ic:"AllowedPrincipals,variant"`
+	Error             *SnsWasmError                 `ic:"Error,variant" json:"Error,omitempty"`
+	AllowedPrincipals *GetAllowedPrincipalsResponse `ic:"AllowedPrincipals,variant" json:"AllowedPrincipals,omitempty"`
 }
 
 type UpdateSnsSubnetListRequest struct {

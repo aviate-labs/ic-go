@@ -2,8 +2,8 @@
 package ic
 
 const (
-	IC     = "release-2024-12-06_03-16-base" // https://github.com/dfinity/ic
+	IC     = "release-2025-02-20_10-16-base" // https://github.com/dfinity/ic
 	ICRC1  = "master"                        // https://github.com/dfinity/ICRC-1
 	PORTAL = "master"                        // https://github.com/dfinity/portal
-	SDK    = "0.24.3"                        // https://github.com/dfinity/sdk
+	SDK    = "0.25.0"                        // https://github.com/dfinity/sdk
 )

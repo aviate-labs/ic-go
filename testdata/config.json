@@ -1,8 +1,8 @@
 {
   "args": {
-    "ic": "https://raw.githubusercontent.com/dfinity/ic/release-2024-12-06_03-16-base",
+    "ic": "https://raw.githubusercontent.com/dfinity/ic/release-2025-02-20_10-16-base",
     "portal": "https://raw.githubusercontent.com/dfinity/portal/master",
-    "sdk": "https://raw.githubusercontent.com/dfinity/sdk/0.24.3",
+    "sdk": "https://raw.githubusercontent.com/dfinity/sdk/0.25.0",
     "icrc1": "https://raw.githubusercontent.com/dfinity/ICRC-1/master"
   },
   "candid": "testdata/did",
@@ -24,7 +24,7 @@
       "root": "ic://rs/sns/root/canister/root.did",
       "swap": "ic://rs/sns/swap/canister/swap.did",
       "ledger": "ic://rs/ledger_suite/icrc1/ledger/ledger.did",
-      "index": "ic://rs/ledger_suite/icrc1/index/index.did"
+      "index": "ic://rs/ledger_suite/icrc1/index-ng/index-ng.did"
     }
   }
 }

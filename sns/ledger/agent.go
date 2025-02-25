@@ -421,32 +421,32 @@ type ApproveError struct {
 	GenericError *struct {
 		Message   string  `ic:"message" json:"message"`
 		ErrorCode idl.Nat `ic:"error_code" json:"error_code"`
-	} `ic:"GenericError,variant"`
-	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
+	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant" json:"TemporarilyUnavailable,omitempty"`
 	Duplicate              *struct {
 		DuplicateOf BlockIndex `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"Duplicate,variant"`
+	} `ic:"Duplicate,variant" json:"Duplicate,omitempty"`
 	BadFee *struct {
 		ExpectedFee idl.Nat `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	AllowanceChanged *struct {
 		CurrentAllowance idl.Nat `ic:"current_allowance" json:"current_allowance"`
-	} `ic:"AllowanceChanged,variant"`
+	} `ic:"AllowanceChanged,variant" json:"AllowanceChanged,omitempty"`
 	CreatedInFuture *struct {
 		LedgerTime Timestamp `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"CreatedInFuture,variant"`
-	TooOld  *idl.Null `ic:"TooOld,variant"`
+	} `ic:"CreatedInFuture,variant" json:"CreatedInFuture,omitempty"`
+	TooOld  *idl.Null `ic:"TooOld,variant" json:"TooOld,omitempty"`
 	Expired *struct {
 		LedgerTime Timestamp `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"Expired,variant"`
+	} `ic:"Expired,variant" json:"Expired,omitempty"`
 	InsufficientFunds *struct {
 		Balance idl.Nat `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
 }
 
 type ApproveResult struct {
-	Ok  *BlockIndex   `ic:"Ok,variant"`
-	Err *ApproveError `ic:"Err,variant"`
+	Ok  *BlockIndex   `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *ApproveError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type ArchiveInfo struct {
@@ -483,8 +483,8 @@ type ChangeArchiveOptions struct {
 }
 
 type ChangeFeeCollector struct {
-	Unset *idl.Null `ic:"Unset,variant"`
-	SetTo *Account  `ic:"SetTo,variant"`
+	Unset *idl.Null `ic:"Unset,variant" json:"Unset,omitempty"`
+	SetTo *Account  `ic:"SetTo,variant" json:"SetTo,omitempty"`
 }
 
 type DataCertificate struct {
@@ -578,15 +578,15 @@ type ICRC3DataCertificate struct {
 }
 
 type ICRC3Value struct {
-	Blob  *[]byte       `ic:"Blob,variant"`
-	Text  *string       `ic:"Text,variant"`
-	Nat   *idl.Nat      `ic:"Nat,variant"`
-	Int   *idl.Int      `ic:"Int,variant"`
-	Array *[]ICRC3Value `ic:"Array,variant"`
+	Blob  *[]byte       `ic:"Blob,variant" json:"Blob,omitempty"`
+	Text  *string       `ic:"Text,variant" json:"Text,omitempty"`
+	Nat   *idl.Nat      `ic:"Nat,variant" json:"Nat,omitempty"`
+	Int   *idl.Int      `ic:"Int,variant" json:"Int,omitempty"`
+	Array *[]ICRC3Value `ic:"Array,variant" json:"Array,omitempty"`
 	Map   *[]struct {
 		Field0 string     `ic:"0" json:"0"`
 		Field1 ICRC3Value `ic:"1" json:"1"`
-	} `ic:"Map,variant"`
+	} `ic:"Map,variant" json:"Map,omitempty"`
 }
 
 type Icrc21ConsentInfo struct {
@@ -595,12 +595,12 @@ type Icrc21ConsentInfo struct {
 }
 
 type Icrc21ConsentMessage struct {
-	GenericDisplayMessage *string `ic:"GenericDisplayMessage,variant"`
+	GenericDisplayMessage *string `ic:"GenericDisplayMessage,variant" json:"GenericDisplayMessage,omitempty"`
 	LineDisplayMessage    *struct {
 		Pages []struct {
 			Lines []string `ic:"lines" json:"lines"`
 		} `ic:"pages" json:"pages"`
-	} `ic:"LineDisplayMessage,variant"`
+	} `ic:"LineDisplayMessage,variant" json:"LineDisplayMessage,omitempty"`
 }
 
 type Icrc21ConsentMessageMetadata struct {
@@ -615,29 +615,29 @@ type Icrc21ConsentMessageRequest struct {
 }
 
 type Icrc21ConsentMessageResponse struct {
-	Ok  *Icrc21ConsentInfo `ic:"Ok,variant"`
-	Err *Icrc21Error       `ic:"Err,variant"`
+	Ok  *Icrc21ConsentInfo `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *Icrc21Error       `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Icrc21ConsentMessageSpec struct {
 	Metadata   Icrc21ConsentMessageMetadata `ic:"metadata" json:"metadata"`
 	DeviceSpec *struct {
-		GenericDisplay *idl.Null `ic:"GenericDisplay,variant"`
+		GenericDisplay *idl.Null `ic:"GenericDisplay,variant" json:"GenericDisplay,omitempty"`
 		LineDisplay    *struct {
 			CharactersPerLine uint16 `ic:"characters_per_line" json:"characters_per_line"`
 			LinesPerPage      uint16 `ic:"lines_per_page" json:"lines_per_page"`
-		} `ic:"LineDisplay,variant"`
+		} `ic:"LineDisplay,variant" json:"LineDisplay,omitempty"`
 	} `ic:"device_spec,omitempty" json:"device_spec,omitempty"`
 }
 
 type Icrc21Error struct {
-	UnsupportedCanisterCall   *Icrc21ErrorInfo `ic:"UnsupportedCanisterCall,variant"`
-	ConsentMessageUnavailable *Icrc21ErrorInfo `ic:"ConsentMessageUnavailable,variant"`
-	InsufficientPayment       *Icrc21ErrorInfo `ic:"InsufficientPayment,variant"`
+	UnsupportedCanisterCall   *Icrc21ErrorInfo `ic:"UnsupportedCanisterCall,variant" json:"UnsupportedCanisterCall,omitempty"`
+	ConsentMessageUnavailable *Icrc21ErrorInfo `ic:"ConsentMessageUnavailable,variant" json:"ConsentMessageUnavailable,omitempty"`
+	InsufficientPayment       *Icrc21ErrorInfo `ic:"InsufficientPayment,variant" json:"InsufficientPayment,omitempty"`
 	GenericError              *struct {
 		ErrorCode   idl.Nat `ic:"error_code" json:"error_code"`
 		Description string  `ic:"description" json:"description"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type Icrc21ErrorInfo struct {
@@ -660,10 +660,8 @@ type InitArgs struct {
 		Field0 Account `ic:"0" json:"0"`
 		Field1 idl.Nat `ic:"1" json:"1"`
 	} `ic:"initial_balances" json:"initial_balances"`
-	FeatureFlags                 *FeatureFlags `ic:"feature_flags,omitempty" json:"feature_flags,omitempty"`
-	MaximumNumberOfAccounts      *uint64       `ic:"maximum_number_of_accounts,omitempty" json:"maximum_number_of_accounts,omitempty"`
-	AccountsOverflowTrimQuantity *uint64       `ic:"accounts_overflow_trim_quantity,omitempty" json:"accounts_overflow_trim_quantity,omitempty"`
-	ArchiveOptions               struct {
+	FeatureFlags   *FeatureFlags `ic:"feature_flags,omitempty" json:"feature_flags,omitempty"`
+	ArchiveOptions struct {
 		NumBlocksToArchive         uint64                 `ic:"num_blocks_to_archive" json:"num_blocks_to_archive"`
 		MaxTransactionsPerResponse *uint64                `ic:"max_transactions_per_response,omitempty" json:"max_transactions_per_response,omitempty"`
 		TriggerThreshold           uint64                 `ic:"trigger_threshold" json:"trigger_threshold"`
@@ -676,8 +674,8 @@ type InitArgs struct {
 }
 
 type LedgerArg struct {
-	Init    *InitArgs     `ic:"Init,variant"`
-	Upgrade **UpgradeArgs `ic:"Upgrade,variant"`
+	Init    *InitArgs     `ic:"Init,variant" json:"Init,omitempty"`
+	Upgrade **UpgradeArgs `ic:"Upgrade,variant" json:"Upgrade,omitempty"`
 }
 
 type Map = []struct {
@@ -686,10 +684,10 @@ type Map = []struct {
 }
 
 type MetadataValue struct {
-	Nat  *idl.Nat `ic:"Nat,variant"`
-	Int  *idl.Int `ic:"Int,variant"`
-	Text *string  `ic:"Text,variant"`
-	Blob *[]byte  `ic:"Blob,variant"`
+	Nat  *idl.Nat `ic:"Nat,variant" json:"Nat,omitempty"`
+	Int  *idl.Int `ic:"Int,variant" json:"Int,omitempty"`
+	Text *string  `ic:"Text,variant" json:"Text,omitempty"`
+	Blob *[]byte  `ic:"Blob,variant" json:"Blob,omitempty"`
 }
 
 type Mint struct {
@@ -749,25 +747,25 @@ type TransferArg struct {
 type TransferError struct {
 	BadFee *struct {
 		ExpectedFee Tokens `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	BadBurn *struct {
 		MinBurnAmount Tokens `ic:"min_burn_amount" json:"min_burn_amount"`
-	} `ic:"BadBurn,variant"`
+	} `ic:"BadBurn,variant" json:"BadBurn,omitempty"`
 	InsufficientFunds *struct {
 		Balance Tokens `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
-	TooOld          *idl.Null `ic:"TooOld,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
+	TooOld          *idl.Null `ic:"TooOld,variant" json:"TooOld,omitempty"`
 	CreatedInFuture *struct {
 		LedgerTime Timestamp `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"CreatedInFuture,variant"`
-	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant"`
+	} `ic:"CreatedInFuture,variant" json:"CreatedInFuture,omitempty"`
+	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant" json:"TemporarilyUnavailable,omitempty"`
 	Duplicate              *struct {
 		DuplicateOf BlockIndex `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"Duplicate,variant"`
+	} `ic:"Duplicate,variant" json:"Duplicate,omitempty"`
 	GenericError *struct {
 		ErrorCode idl.Nat `ic:"error_code" json:"error_code"`
 		Message   string  `ic:"message" json:"message"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type TransferFromArgs struct {
@@ -783,38 +781,38 @@ type TransferFromArgs struct {
 type TransferFromError struct {
 	BadFee *struct {
 		ExpectedFee Tokens `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	BadBurn *struct {
 		MinBurnAmount Tokens `ic:"min_burn_amount" json:"min_burn_amount"`
-	} `ic:"BadBurn,variant"`
+	} `ic:"BadBurn,variant" json:"BadBurn,omitempty"`
 	InsufficientFunds *struct {
 		Balance Tokens `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
 	InsufficientAllowance *struct {
 		Allowance Tokens `ic:"allowance" json:"allowance"`
-	} `ic:"InsufficientAllowance,variant"`
-	TooOld          *idl.Null `ic:"TooOld,variant"`
+	} `ic:"InsufficientAllowance,variant" json:"InsufficientAllowance,omitempty"`
+	TooOld          *idl.Null `ic:"TooOld,variant" json:"TooOld,omitempty"`
 	CreatedInFuture *struct {
 		LedgerTime Timestamp `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"CreatedInFuture,variant"`
+	} `ic:"CreatedInFuture,variant" json:"CreatedInFuture,omitempty"`
 	Duplicate *struct {
 		DuplicateOf BlockIndex `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"Duplicate,variant"`
-	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant"`
+	} `ic:"Duplicate,variant" json:"Duplicate,omitempty"`
+	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant" json:"TemporarilyUnavailable,omitempty"`
 	GenericError           *struct {
 		ErrorCode idl.Nat `ic:"error_code" json:"error_code"`
 		Message   string  `ic:"message" json:"message"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type TransferFromResult struct {
-	Ok  *BlockIndex        `ic:"Ok,variant"`
-	Err *TransferFromError `ic:"Err,variant"`
+	Ok  *BlockIndex        `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *TransferFromError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type TransferResult struct {
-	Ok  *BlockIndex    `ic:"Ok,variant"`
-	Err *TransferError `ic:"Err,variant"`
+	Ok  *BlockIndex    `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *TransferError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type TxIndex = idl.Nat
@@ -824,22 +822,21 @@ type UpgradeArgs struct {
 		Field0 string        `ic:"0" json:"0"`
 		Field1 MetadataValue `ic:"1" json:"1"`
 	} `ic:"metadata,omitempty" json:"metadata,omitempty"`
-	TokenSymbol                  *string               `ic:"token_symbol,omitempty" json:"token_symbol,omitempty"`
-	TokenName                    *string               `ic:"token_name,omitempty" json:"token_name,omitempty"`
-	TransferFee                  *idl.Nat              `ic:"transfer_fee,omitempty" json:"transfer_fee,omitempty"`
-	ChangeFeeCollector           *ChangeFeeCollector   `ic:"change_fee_collector,omitempty" json:"change_fee_collector,omitempty"`
-	MaxMemoLength                *uint16               `ic:"max_memo_length,omitempty" json:"max_memo_length,omitempty"`
-	FeatureFlags                 *FeatureFlags         `ic:"feature_flags,omitempty" json:"feature_flags,omitempty"`
-	AccountsOverflowTrimQuantity *uint64               `ic:"accounts_overflow_trim_quantity,omitempty" json:"accounts_overflow_trim_quantity,omitempty"`
-	ChangeArchiveOptions         *ChangeArchiveOptions `ic:"change_archive_options,omitempty" json:"change_archive_options,omitempty"`
+	TokenSymbol          *string               `ic:"token_symbol,omitempty" json:"token_symbol,omitempty"`
+	TokenName            *string               `ic:"token_name,omitempty" json:"token_name,omitempty"`
+	TransferFee          *idl.Nat              `ic:"transfer_fee,omitempty" json:"transfer_fee,omitempty"`
+	ChangeFeeCollector   *ChangeFeeCollector   `ic:"change_fee_collector,omitempty" json:"change_fee_collector,omitempty"`
+	MaxMemoLength        *uint16               `ic:"max_memo_length,omitempty" json:"max_memo_length,omitempty"`
+	FeatureFlags         *FeatureFlags         `ic:"feature_flags,omitempty" json:"feature_flags,omitempty"`
+	ChangeArchiveOptions *ChangeArchiveOptions `ic:"change_archive_options,omitempty" json:"change_archive_options,omitempty"`
 }
 
 type Value struct {
-	Blob  *[]byte  `ic:"Blob,variant"`
-	Text  *string  `ic:"Text,variant"`
-	Nat   *idl.Nat `ic:"Nat,variant"`
-	Nat64 *uint64  `ic:"Nat64,variant"`
-	Int   *idl.Int `ic:"Int,variant"`
-	Array *[]Value `ic:"Array,variant"`
-	Map   *Map     `ic:"Map,variant"`
+	Blob  *[]byte  `ic:"Blob,variant" json:"Blob,omitempty"`
+	Text  *string  `ic:"Text,variant" json:"Text,omitempty"`
+	Nat   *idl.Nat `ic:"Nat,variant" json:"Nat,omitempty"`
+	Nat64 *uint64  `ic:"Nat64,variant" json:"Nat64,omitempty"`
+	Int   *idl.Int `ic:"Int,variant" json:"Int,omitempty"`
+	Array *[]Value `ic:"Array,variant" json:"Array,omitempty"`
+	Map   *Map     `ic:"Map,variant" json:"Map,omitempty"`
 }

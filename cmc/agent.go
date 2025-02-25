@@ -177,12 +177,12 @@ type CreateCanisterError struct {
 	Refunded *struct {
 		RefundAmount idl.Nat `ic:"refund_amount" json:"refund_amount"`
 		CreateError  string  `ic:"create_error" json:"create_error"`
-	} `ic:"Refunded,variant"`
+	} `ic:"Refunded,variant" json:"Refunded,omitempty"`
 }
 
 type CreateCanisterResult struct {
-	Ok  *principal.Principal `ic:"Ok,variant"`
-	Err *CreateCanisterError `ic:"Err,variant"`
+	Ok  *principal.Principal `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *CreateCanisterError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Cycles = idl.Nat
@@ -197,8 +197,8 @@ type CyclesCanisterInitPayload struct {
 }
 
 type ExchangeRateCanister struct {
-	Set   *principal.Principal `ic:"Set,variant"`
-	Unset *idl.Null            `ic:"Unset,variant"`
+	Set   *principal.Principal `ic:"Set,variant" json:"Set,omitempty"`
+	Unset *idl.Null            `ic:"Unset,variant" json:"Unset,omitempty"`
 }
 
 type IcpXdrConversionRate struct {
@@ -213,8 +213,8 @@ type IcpXdrConversionRateResponse struct {
 }
 
 type LogVisibility struct {
-	Controllers *idl.Null `ic:"controllers,variant"`
-	Public      *idl.Null `ic:"public,variant"`
+	Controllers *idl.Null `ic:"controllers,variant" json:"controllers,omitempty"`
+	Public      *idl.Null `ic:"public,variant" json:"public,omitempty"`
 }
 
 type Memo = *[]byte
@@ -228,22 +228,22 @@ type NotifyCreateCanisterArg struct {
 }
 
 type NotifyCreateCanisterResult struct {
-	Ok  *principal.Principal `ic:"Ok,variant"`
-	Err *NotifyError         `ic:"Err,variant"`
+	Ok  *principal.Principal `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *NotifyError         `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type NotifyError struct {
 	Refunded *struct {
 		Reason     string      `ic:"reason" json:"reason"`
 		BlockIndex *BlockIndex `ic:"block_index,omitempty" json:"block_index,omitempty"`
-	} `ic:"Refunded,variant"`
-	Processing         *idl.Null   `ic:"Processing,variant"`
-	TransactionTooOld  *BlockIndex `ic:"TransactionTooOld,variant"`
-	InvalidTransaction *string     `ic:"InvalidTransaction,variant"`
+	} `ic:"Refunded,variant" json:"Refunded,omitempty"`
+	Processing         *idl.Null   `ic:"Processing,variant" json:"Processing,omitempty"`
+	TransactionTooOld  *BlockIndex `ic:"TransactionTooOld,variant" json:"TransactionTooOld,omitempty"`
+	InvalidTransaction *string     `ic:"InvalidTransaction,variant" json:"InvalidTransaction,omitempty"`
 	Other              *struct {
 		ErrorCode    uint64 `ic:"error_code" json:"error_code"`
 		ErrorMessage string `ic:"error_message" json:"error_message"`
-	} `ic:"Other,variant"`
+	} `ic:"Other,variant" json:"Other,omitempty"`
 }
 
 type NotifyMintCyclesArg struct {
@@ -253,8 +253,8 @@ type NotifyMintCyclesArg struct {
 }
 
 type NotifyMintCyclesResult struct {
-	Ok  *NotifyMintCyclesSuccess `ic:"Ok,variant"`
-	Err *NotifyError             `ic:"Err,variant"`
+	Ok  *NotifyMintCyclesSuccess `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *NotifyError             `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type NotifyMintCyclesSuccess struct {
@@ -269,8 +269,8 @@ type NotifyTopUpArg struct {
 }
 
 type NotifyTopUpResult struct {
-	Ok  *Cycles      `ic:"Ok,variant"`
-	Err *NotifyError `ic:"Err,variant"`
+	Ok  *Cycles      `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *NotifyError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type PrincipalsAuthorizedToCreateCanistersToSubnetsResponse struct {
@@ -289,8 +289,8 @@ type SubnetFilter struct {
 type SubnetSelection struct {
 	Subnet *struct {
 		Subnet principal.Principal `ic:"subnet" json:"subnet"`
-	} `ic:"Subnet,variant"`
-	Filter *SubnetFilter `ic:"Filter,variant"`
+	} `ic:"Subnet,variant" json:"Subnet,omitempty"`
+	Filter *SubnetFilter `ic:"Filter,variant" json:"Filter,omitempty"`
 }
 
 type SubnetTypesToSubnetsResponse struct {

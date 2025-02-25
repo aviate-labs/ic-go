@@ -77,21 +77,21 @@ type GetBlocksError struct {
 	BadFirstBlockIndex *struct {
 		RequestedIndex  BlockIndex `ic:"requested_index" json:"requested_index"`
 		FirstValidIndex BlockIndex `ic:"first_valid_index" json:"first_valid_index"`
-	} `ic:"BadFirstBlockIndex,variant"`
+	} `ic:"BadFirstBlockIndex,variant" json:"BadFirstBlockIndex,omitempty"`
 	Other *struct {
 		ErrorCode    uint64 `ic:"error_code" json:"error_code"`
 		ErrorMessage string `ic:"error_message" json:"error_message"`
-	} `ic:"Other,variant"`
+	} `ic:"Other,variant" json:"Other,omitempty"`
 }
 
 type GetBlocksResult struct {
-	Ok  *BlockRange     `ic:"Ok,variant"`
-	Err *GetBlocksError `ic:"Err,variant"`
+	Ok  *BlockRange     `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GetBlocksError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type GetEncodedBlocksResult struct {
-	Ok  *[][]byte       `ic:"Ok,variant"`
-	Err *GetBlocksError `ic:"Err,variant"`
+	Ok  *[][]byte       `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GetBlocksError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Memo = uint64
@@ -100,19 +100,19 @@ type Operation struct {
 	Mint *struct {
 		To     AccountIdentifier `ic:"to" json:"to"`
 		Amount Tokens            `ic:"amount" json:"amount"`
-	} `ic:"Mint,variant"`
+	} `ic:"Mint,variant" json:"Mint,omitempty"`
 	Burn *struct {
 		From    AccountIdentifier  `ic:"from" json:"from"`
 		Spender *AccountIdentifier `ic:"spender,omitempty" json:"spender,omitempty"`
 		Amount  Tokens             `ic:"amount" json:"amount"`
-	} `ic:"Burn,variant"`
+	} `ic:"Burn,variant" json:"Burn,omitempty"`
 	Transfer *struct {
 		From    AccountIdentifier `ic:"from" json:"from"`
 		To      AccountIdentifier `ic:"to" json:"to"`
 		Amount  Tokens            `ic:"amount" json:"amount"`
 		Fee     Tokens            `ic:"fee" json:"fee"`
 		Spender *[]uint8          `ic:"spender,omitempty" json:"spender,omitempty"`
-	} `ic:"Transfer,variant"`
+	} `ic:"Transfer,variant" json:"Transfer,omitempty"`
 	Approve *struct {
 		From              AccountIdentifier `ic:"from" json:"from"`
 		Spender           AccountIdentifier `ic:"spender" json:"spender"`
@@ -121,7 +121,7 @@ type Operation struct {
 		Fee               Tokens            `ic:"fee" json:"fee"`
 		ExpiresAt         *Timestamp        `ic:"expires_at,omitempty" json:"expires_at,omitempty"`
 		ExpectedAllowance *Tokens           `ic:"expected_allowance,omitempty" json:"expected_allowance,omitempty"`
-	} `ic:"Approve,variant"`
+	} `ic:"Approve,variant" json:"Approve,omitempty"`
 }
 
 type Timestamp struct {

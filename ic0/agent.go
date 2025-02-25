@@ -865,8 +865,8 @@ type BitcoinGetUtxosArgs struct {
 	Address BitcoinAddress `ic:"address" json:"address"`
 	Network BitcoinNetwork `ic:"network" json:"network"`
 	Filter  *struct {
-		MinConfirmations *uint32 `ic:"min_confirmations,variant"`
-		Page             *[]byte `ic:"page,variant"`
+		MinConfirmations *uint32 `ic:"min_confirmations,variant" json:"min_confirmations,omitempty"`
+		Page             *[]byte `ic:"page,variant" json:"page,omitempty"`
 	} `ic:"filter,omitempty" json:"filter,omitempty"`
 }
 
@@ -878,8 +878,8 @@ type BitcoinGetUtxosResult struct {
 }
 
 type BitcoinNetwork struct {
-	Mainnet *idl.Null `ic:"mainnet,variant"`
-	Testnet *idl.Null `ic:"testnet,variant"`
+	Mainnet *idl.Null `ic:"mainnet,variant" json:"mainnet,omitempty"`
+	Testnet *idl.Null `ic:"testnet,variant" json:"testnet,omitempty"`
 }
 
 type BitcoinSendTransactionArgs struct {
@@ -902,15 +902,15 @@ type CanisterInfoResult struct {
 }
 
 type CanisterInstallMode struct {
-	Install   *idl.Null `ic:"install,variant"`
-	Reinstall *idl.Null `ic:"reinstall,variant"`
+	Install   *idl.Null `ic:"install,variant" json:"install,omitempty"`
+	Reinstall *idl.Null `ic:"reinstall,variant" json:"reinstall,omitempty"`
 	Upgrade   **struct {
 		SkipPreUpgrade        *bool `ic:"skip_pre_upgrade,omitempty" json:"skip_pre_upgrade,omitempty"`
 		WasmMemoryPersistence *struct {
-			Keep    *idl.Null `ic:"keep,variant"`
-			Replace *idl.Null `ic:"replace,variant"`
+			Keep    *idl.Null `ic:"keep,variant" json:"keep,omitempty"`
+			Replace *idl.Null `ic:"replace,variant" json:"replace,omitempty"`
 		} `ic:"wasm_memory_persistence,omitempty" json:"wasm_memory_persistence,omitempty"`
-	} `ic:"upgrade,variant"`
+	} `ic:"upgrade,variant" json:"upgrade,omitempty"`
 }
 
 type CanisterLogRecord struct {
@@ -935,9 +935,9 @@ type CanisterStatusArgs struct {
 
 type CanisterStatusResult struct {
 	Status struct {
-		Running  *idl.Null `ic:"running,variant"`
-		Stopping *idl.Null `ic:"stopping,variant"`
-		Stopped  *idl.Null `ic:"stopped,variant"`
+		Running  *idl.Null `ic:"running,variant" json:"running,omitempty"`
+		Stopping *idl.Null `ic:"stopping,variant" json:"stopping,omitempty"`
+		Stopped  *idl.Null `ic:"stopped,variant" json:"stopped,omitempty"`
 	} `ic:"status" json:"status"`
 	Settings               DefiniteCanisterSettings `ic:"settings" json:"settings"`
 	ModuleHash             *[]byte                  `ic:"module_hash,omitempty" json:"module_hash,omitempty"`
@@ -963,34 +963,34 @@ type Change struct {
 type ChangeDetails struct {
 	Creation *struct {
 		Controllers []principal.Principal `ic:"controllers" json:"controllers"`
-	} `ic:"creation,variant"`
-	CodeUninstall  *idl.Null `ic:"code_uninstall,variant"`
+	} `ic:"creation,variant" json:"creation,omitempty"`
+	CodeUninstall  *idl.Null `ic:"code_uninstall,variant" json:"code_uninstall,omitempty"`
 	CodeDeployment *struct {
 		Mode struct {
-			Install   *idl.Null `ic:"install,variant"`
-			Reinstall *idl.Null `ic:"reinstall,variant"`
-			Upgrade   *idl.Null `ic:"upgrade,variant"`
+			Install   *idl.Null `ic:"install,variant" json:"install,omitempty"`
+			Reinstall *idl.Null `ic:"reinstall,variant" json:"reinstall,omitempty"`
+			Upgrade   *idl.Null `ic:"upgrade,variant" json:"upgrade,omitempty"`
 		} `ic:"mode" json:"mode"`
 		ModuleHash []byte `ic:"module_hash" json:"module_hash"`
-	} `ic:"code_deployment,variant"`
+	} `ic:"code_deployment,variant" json:"code_deployment,omitempty"`
 	LoadSnapshot *struct {
 		CanisterVersion  uint64     `ic:"canister_version" json:"canister_version"`
 		SnapshotId       SnapshotId `ic:"snapshot_id" json:"snapshot_id"`
 		TakenAtTimestamp uint64     `ic:"taken_at_timestamp" json:"taken_at_timestamp"`
-	} `ic:"load_snapshot,variant"`
+	} `ic:"load_snapshot,variant" json:"load_snapshot,omitempty"`
 	ControllersChange *struct {
 		Controllers []principal.Principal `ic:"controllers" json:"controllers"`
-	} `ic:"controllers_change,variant"`
+	} `ic:"controllers_change,variant" json:"controllers_change,omitempty"`
 }
 
 type ChangeOrigin struct {
 	FromUser *struct {
 		UserId principal.Principal `ic:"user_id" json:"user_id"`
-	} `ic:"from_user,variant"`
+	} `ic:"from_user,variant" json:"from_user,omitempty"`
 	FromCanister *struct {
 		CanisterId      principal.Principal `ic:"canister_id" json:"canister_id"`
 		CanisterVersion *uint64             `ic:"canister_version,omitempty" json:"canister_version,omitempty"`
-	} `ic:"from_canister,variant"`
+	} `ic:"from_canister,variant" json:"from_canister,omitempty"`
 }
 
 type ChunkHash struct {
@@ -1034,7 +1034,7 @@ type DepositCyclesArgs struct {
 }
 
 type EcdsaCurve struct {
-	Secp256k1 *idl.Null `ic:"secp256k1,variant"`
+	Secp256k1 *idl.Null `ic:"secp256k1,variant" json:"secp256k1,omitempty"`
 }
 
 type EcdsaPublicKeyArgs struct {
@@ -1068,9 +1068,9 @@ type HttpRequestArgs struct {
 	Url              string  `ic:"url" json:"url"`
 	MaxResponseBytes *uint64 `ic:"max_response_bytes,omitempty" json:"max_response_bytes,omitempty"`
 	Method           struct {
-		Get  *idl.Null `ic:"get,variant"`
-		Head *idl.Null `ic:"head,variant"`
-		Post *idl.Null `ic:"post,variant"`
+		Get  *idl.Null `ic:"get,variant" json:"get,omitempty"`
+		Head *idl.Null `ic:"head,variant" json:"head,omitempty"`
+		Post *idl.Null `ic:"post,variant" json:"post,omitempty"`
 	} `ic:"method" json:"method"`
 	Headers   []HttpHeader `ic:"headers" json:"headers"`
 	Body      *[]byte      `ic:"body,omitempty" json:"body,omitempty"`
@@ -1117,9 +1117,9 @@ type LoadCanisterSnapshotArgs struct {
 }
 
 type LogVisibility struct {
-	Controllers    *idl.Null              `ic:"controllers,variant"`
-	Public         *idl.Null              `ic:"public,variant"`
-	AllowedViewers *[]principal.Principal `ic:"allowed_viewers,variant"`
+	Controllers    *idl.Null              `ic:"controllers,variant" json:"controllers,omitempty"`
+	Public         *idl.Null              `ic:"public,variant" json:"public,omitempty"`
+	AllowedViewers *[]principal.Principal `ic:"allowed_viewers,variant" json:"allowed_viewers,omitempty"`
 }
 
 type MillisatoshiPerByte = uint64
@@ -1166,14 +1166,14 @@ type RawRandResult = []byte
 type Satoshi = uint64
 
 type SchnorrAlgorithm struct {
-	Bip340secp256k1 *idl.Null `ic:"bip340secp256k1,variant"`
-	Ed25519         *idl.Null `ic:"ed25519,variant"`
+	Bip340secp256k1 *idl.Null `ic:"bip340secp256k1,variant" json:"bip340secp256k1,omitempty"`
+	Ed25519         *idl.Null `ic:"ed25519,variant" json:"ed25519,omitempty"`
 }
 
 type SchnorrAux struct {
 	Bip341 *struct {
 		MerkleRootHash []byte `ic:"merkle_root_hash" json:"merkle_root_hash"`
-	} `ic:"bip341,variant"`
+	} `ic:"bip341,variant" json:"bip341,omitempty"`
 }
 
 type SchnorrPublicKeyArgs struct {

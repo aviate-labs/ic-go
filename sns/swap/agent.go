@@ -338,12 +338,13 @@ type CanisterStatusResultV2 struct {
 	Settings               DefiniteCanisterSettingsArgs `ic:"settings" json:"settings"`
 	IdleCyclesBurnedPerDay idl.Nat                      `ic:"idle_cycles_burned_per_day" json:"idle_cycles_burned_per_day"`
 	ModuleHash             *[]byte                      `ic:"module_hash,omitempty" json:"module_hash,omitempty"`
+	QueryStats             *QueryStats                  `ic:"query_stats,omitempty" json:"query_stats,omitempty"`
 }
 
 type CanisterStatusType struct {
-	Stopped  *idl.Null `ic:"stopped,variant"`
-	Stopping *idl.Null `ic:"stopping,variant"`
-	Running  *idl.Null `ic:"running,variant"`
+	Stopped  *idl.Null `ic:"stopped,variant" json:"stopped,omitempty"`
+	Stopping *idl.Null `ic:"stopping,variant" json:"stopping,omitempty"`
+	Running  *idl.Null `ic:"running,variant" json:"running,omitempty"`
 }
 
 type CfInvestment struct {
@@ -371,11 +372,12 @@ type Countries struct {
 }
 
 type DefiniteCanisterSettingsArgs struct {
-	FreezingThreshold idl.Nat               `ic:"freezing_threshold" json:"freezing_threshold"`
-	Controllers       []principal.Principal `ic:"controllers" json:"controllers"`
-	WasmMemoryLimit   *idl.Nat              `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
-	MemoryAllocation  idl.Nat               `ic:"memory_allocation" json:"memory_allocation"`
-	ComputeAllocation idl.Nat               `ic:"compute_allocation" json:"compute_allocation"`
+	FreezingThreshold   idl.Nat               `ic:"freezing_threshold" json:"freezing_threshold"`
+	Controllers         []principal.Principal `ic:"controllers" json:"controllers"`
+	WasmMemoryLimit     *idl.Nat              `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
+	MemoryAllocation    idl.Nat               `ic:"memory_allocation" json:"memory_allocation"`
+	ComputeAllocation   idl.Nat               `ic:"compute_allocation" json:"compute_allocation"`
+	WasmMemoryThreshold *idl.Nat              `ic:"wasm_memory_threshold,omitempty" json:"wasm_memory_threshold,omitempty"`
 }
 
 type DerivedState struct {
@@ -539,8 +541,8 @@ type InvalidUserAmount struct {
 }
 
 type Investor struct {
-	CommunityFund *CfInvestment     `ic:"CommunityFund,variant"`
-	Direct        *DirectInvestment `ic:"Direct,variant"`
+	CommunityFund *CfInvestment     `ic:"CommunityFund,variant" json:"CommunityFund,omitempty"`
+	Direct        *DirectInvestment `ic:"Direct,variant" json:"Direct,omitempty"`
 }
 
 type LinearScalingCoefficient struct {
@@ -642,28 +644,35 @@ type Participant struct {
 }
 
 type Possibility struct {
-	Ok  *SetDappControllersResponse `ic:"Ok,variant"`
-	Err *CanisterCallError          `ic:"Err,variant"`
+	Ok  *SetDappControllersResponse `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *CanisterCallError          `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Possibility1 struct {
-	Ok  *Response          `ic:"Ok,variant"`
-	Err *CanisterCallError `ic:"Err,variant"`
+	Ok  *Response          `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *CanisterCallError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Possibility2 struct {
-	Ok  *Ok1   `ic:"Ok,variant"`
-	Err *Error `ic:"Err,variant"`
+	Ok  *Ok1   `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *Error `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Possibility3 struct {
 	Ok *struct {
-	} `ic:"Ok,variant"`
-	Err *CanisterCallError `ic:"Err,variant"`
+	} `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *CanisterCallError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Principals struct {
 	Principals []principal.Principal `ic:"principals" json:"principals"`
+}
+
+type QueryStats struct {
+	NumCallsTotal             *idl.Nat `ic:"num_calls_total,omitempty" json:"num_calls_total,omitempty"`
+	NumInstructionsTotal      *idl.Nat `ic:"num_instructions_total,omitempty" json:"num_instructions_total,omitempty"`
+	RequestPayloadBytesTotal  *idl.Nat `ic:"request_payload_bytes_total,omitempty" json:"request_payload_bytes_total,omitempty"`
+	ResponsePayloadBytesTotal *idl.Nat `ic:"response_payload_bytes_total,omitempty" json:"response_payload_bytes_total,omitempty"`
 }
 
 type RefreshBuyerTokensRequest struct {
@@ -681,18 +690,18 @@ type Response struct {
 }
 
 type Result struct {
-	Ok  *Ok  `ic:"Ok,variant"`
-	Err *Err `ic:"Err,variant"`
+	Ok  *Ok  `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *Err `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result1 struct {
-	Ok  *Ok2  `ic:"Ok,variant"`
-	Err *Err1 `ic:"Err,variant"`
+	Ok  *Ok2  `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *Err1 `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result2 struct {
-	Ok  *Ok2  `ic:"Ok,variant"`
-	Err *Err2 `ic:"Err,variant"`
+	Ok  *Ok2  `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *Err2 `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type SetDappControllersCallResult struct {

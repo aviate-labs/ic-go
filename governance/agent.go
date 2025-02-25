@@ -13,22 +13,22 @@ type AccountIdentifier struct {
 }
 
 type Action struct {
-	RegisterKnownNeuron           *KnownNeuron                   `ic:"RegisterKnownNeuron,variant"`
-	ManageNeuron                  *ManageNeuron                  `ic:"ManageNeuron,variant"`
-	UpdateCanisterSettings        *UpdateCanisterSettings        `ic:"UpdateCanisterSettings,variant"`
-	InstallCode                   *InstallCode                   `ic:"InstallCode,variant"`
-	StopOrStartCanister           *StopOrStartCanister           `ic:"StopOrStartCanister,variant"`
-	CreateServiceNervousSystem    *CreateServiceNervousSystem    `ic:"CreateServiceNervousSystem,variant"`
-	ExecuteNnsFunction            *ExecuteNnsFunction            `ic:"ExecuteNnsFunction,variant"`
-	RewardNodeProvider            *RewardNodeProvider            `ic:"RewardNodeProvider,variant"`
-	OpenSnsTokenSwap              *OpenSnsTokenSwap              `ic:"OpenSnsTokenSwap,variant"`
-	SetSnsTokenSwapOpenTimeWindow *SetSnsTokenSwapOpenTimeWindow `ic:"SetSnsTokenSwapOpenTimeWindow,variant"`
-	SetDefaultFollowees           *SetDefaultFollowees           `ic:"SetDefaultFollowees,variant"`
-	RewardNodeProviders           *RewardNodeProviders           `ic:"RewardNodeProviders,variant"`
-	ManageNetworkEconomics        *NetworkEconomics              `ic:"ManageNetworkEconomics,variant"`
-	ApproveGenesisKyc             *Principals                    `ic:"ApproveGenesisKyc,variant"`
-	AddOrRemoveNodeProvider       *AddOrRemoveNodeProvider       `ic:"AddOrRemoveNodeProvider,variant"`
-	Motion                        *Motion                        `ic:"Motion,variant"`
+	RegisterKnownNeuron           *KnownNeuron                   `ic:"RegisterKnownNeuron,variant" json:"RegisterKnownNeuron,omitempty"`
+	ManageNeuron                  *ManageNeuron                  `ic:"ManageNeuron,variant" json:"ManageNeuron,omitempty"`
+	UpdateCanisterSettings        *UpdateCanisterSettings        `ic:"UpdateCanisterSettings,variant" json:"UpdateCanisterSettings,omitempty"`
+	InstallCode                   *InstallCode                   `ic:"InstallCode,variant" json:"InstallCode,omitempty"`
+	StopOrStartCanister           *StopOrStartCanister           `ic:"StopOrStartCanister,variant" json:"StopOrStartCanister,omitempty"`
+	CreateServiceNervousSystem    *CreateServiceNervousSystem    `ic:"CreateServiceNervousSystem,variant" json:"CreateServiceNervousSystem,omitempty"`
+	ExecuteNnsFunction            *ExecuteNnsFunction            `ic:"ExecuteNnsFunction,variant" json:"ExecuteNnsFunction,omitempty"`
+	RewardNodeProvider            *RewardNodeProvider            `ic:"RewardNodeProvider,variant" json:"RewardNodeProvider,omitempty"`
+	OpenSnsTokenSwap              *OpenSnsTokenSwap              `ic:"OpenSnsTokenSwap,variant" json:"OpenSnsTokenSwap,omitempty"`
+	SetSnsTokenSwapOpenTimeWindow *SetSnsTokenSwapOpenTimeWindow `ic:"SetSnsTokenSwapOpenTimeWindow,variant" json:"SetSnsTokenSwapOpenTimeWindow,omitempty"`
+	SetDefaultFollowees           *SetDefaultFollowees           `ic:"SetDefaultFollowees,variant" json:"SetDefaultFollowees,omitempty"`
+	RewardNodeProviders           *RewardNodeProviders           `ic:"RewardNodeProviders,variant" json:"RewardNodeProviders,omitempty"`
+	ManageNetworkEconomics        *NetworkEconomics              `ic:"ManageNetworkEconomics,variant" json:"ManageNetworkEconomics,omitempty"`
+	ApproveGenesisKyc             *Principals                    `ic:"ApproveGenesisKyc,variant" json:"ApproveGenesisKyc,omitempty"`
+	AddOrRemoveNodeProvider       *AddOrRemoveNodeProvider       `ic:"AddOrRemoveNodeProvider,variant" json:"AddOrRemoveNodeProvider,omitempty"`
+	Motion                        *Motion                        `ic:"Motion,variant" json:"Motion,omitempty"`
 }
 
 type AddHotKey struct {
@@ -483,9 +483,9 @@ type BallotInfo struct {
 
 type By struct {
 	NeuronIdOrSubaccount *struct {
-	} `ic:"NeuronIdOrSubaccount,variant"`
-	MemoAndController *ClaimOrRefreshNeuronFromAccount `ic:"MemoAndController,variant"`
-	Memo              *uint64                          `ic:"Memo,variant"`
+	} `ic:"NeuronIdOrSubaccount,variant" json:"NeuronIdOrSubaccount,omitempty"`
+	MemoAndController *ClaimOrRefreshNeuronFromAccount `ic:"MemoAndController,variant" json:"MemoAndController,omitempty"`
+	Memo              *uint64                          `ic:"Memo,variant" json:"Memo,omitempty"`
 }
 
 type Canister struct {
@@ -493,12 +493,13 @@ type Canister struct {
 }
 
 type CanisterSettings struct {
-	FreezingThreshold *uint64      `ic:"freezing_threshold,omitempty" json:"freezing_threshold,omitempty"`
-	Controllers       *Controllers `ic:"controllers,omitempty" json:"controllers,omitempty"`
-	LogVisibility     *int32       `ic:"log_visibility,omitempty" json:"log_visibility,omitempty"`
-	WasmMemoryLimit   *uint64      `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
-	MemoryAllocation  *uint64      `ic:"memory_allocation,omitempty" json:"memory_allocation,omitempty"`
-	ComputeAllocation *uint64      `ic:"compute_allocation,omitempty" json:"compute_allocation,omitempty"`
+	FreezingThreshold   *uint64      `ic:"freezing_threshold,omitempty" json:"freezing_threshold,omitempty"`
+	Controllers         *Controllers `ic:"controllers,omitempty" json:"controllers,omitempty"`
+	LogVisibility       *int32       `ic:"log_visibility,omitempty" json:"log_visibility,omitempty"`
+	WasmMemoryLimit     *uint64      `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
+	MemoryAllocation    *uint64      `ic:"memory_allocation,omitempty" json:"memory_allocation,omitempty"`
+	ComputeAllocation   *uint64      `ic:"compute_allocation,omitempty" json:"compute_allocation,omitempty"`
+	WasmMemoryThreshold *uint64      `ic:"wasm_memory_threshold,omitempty" json:"wasm_memory_threshold,omitempty"`
 }
 
 type CanisterStatusResultV2 struct {
@@ -517,8 +518,8 @@ type CanisterSummary struct {
 }
 
 type Change struct {
-	ToRemove *NodeProvider `ic:"ToRemove,variant"`
-	ToAdd    *NodeProvider `ic:"ToAdd,variant"`
+	ToRemove *NodeProvider `ic:"ToRemove,variant" json:"ToRemove,omitempty"`
+	ToAdd    *NodeProvider `ic:"ToAdd,variant" json:"ToAdd,omitempty"`
 }
 
 type ChangeAutoStakeMaturity struct {
@@ -543,52 +544,52 @@ type ClaimOrRefreshResponse struct {
 }
 
 type Command struct {
-	Spawn              *Spawn              `ic:"Spawn,variant"`
-	Split              *Split              `ic:"Split,variant"`
-	Follow             *Follow             `ic:"Follow,variant"`
-	ClaimOrRefresh     *ClaimOrRefresh     `ic:"ClaimOrRefresh,variant"`
-	Configure          *Configure          `ic:"Configure,variant"`
-	RegisterVote       *RegisterVote       `ic:"RegisterVote,variant"`
-	Merge              *Merge              `ic:"Merge,variant"`
-	DisburseToNeuron   *DisburseToNeuron   `ic:"DisburseToNeuron,variant"`
-	MakeProposal       *Proposal           `ic:"MakeProposal,variant"`
-	StakeMaturity      *StakeMaturity      `ic:"StakeMaturity,variant"`
-	MergeMaturity      *MergeMaturity      `ic:"MergeMaturity,variant"`
-	Disburse           *Disburse           `ic:"Disburse,variant"`
-	RefreshVotingPower *RefreshVotingPower `ic:"RefreshVotingPower,variant"`
+	Spawn              *Spawn              `ic:"Spawn,variant" json:"Spawn,omitempty"`
+	Split              *Split              `ic:"Split,variant" json:"Split,omitempty"`
+	Follow             *Follow             `ic:"Follow,variant" json:"Follow,omitempty"`
+	ClaimOrRefresh     *ClaimOrRefresh     `ic:"ClaimOrRefresh,variant" json:"ClaimOrRefresh,omitempty"`
+	Configure          *Configure          `ic:"Configure,variant" json:"Configure,omitempty"`
+	RegisterVote       *RegisterVote       `ic:"RegisterVote,variant" json:"RegisterVote,omitempty"`
+	Merge              *Merge              `ic:"Merge,variant" json:"Merge,omitempty"`
+	DisburseToNeuron   *DisburseToNeuron   `ic:"DisburseToNeuron,variant" json:"DisburseToNeuron,omitempty"`
+	MakeProposal       *Proposal           `ic:"MakeProposal,variant" json:"MakeProposal,omitempty"`
+	StakeMaturity      *StakeMaturity      `ic:"StakeMaturity,variant" json:"StakeMaturity,omitempty"`
+	MergeMaturity      *MergeMaturity      `ic:"MergeMaturity,variant" json:"MergeMaturity,omitempty"`
+	Disburse           *Disburse           `ic:"Disburse,variant" json:"Disburse,omitempty"`
+	RefreshVotingPower *RefreshVotingPower `ic:"RefreshVotingPower,variant" json:"RefreshVotingPower,omitempty"`
 }
 
 type Command1 struct {
-	Error  *GovernanceError `ic:"Error,variant"`
-	Spawn  *SpawnResponse   `ic:"Spawn,variant"`
-	Split  *SpawnResponse   `ic:"Split,variant"`
+	Error  *GovernanceError `ic:"Error,variant" json:"Error,omitempty"`
+	Spawn  *SpawnResponse   `ic:"Spawn,variant" json:"Spawn,omitempty"`
+	Split  *SpawnResponse   `ic:"Split,variant" json:"Split,omitempty"`
 	Follow *struct {
-	} `ic:"Follow,variant"`
-	ClaimOrRefresh *ClaimOrRefreshResponse `ic:"ClaimOrRefresh,variant"`
+	} `ic:"Follow,variant" json:"Follow,omitempty"`
+	ClaimOrRefresh *ClaimOrRefreshResponse `ic:"ClaimOrRefresh,variant" json:"ClaimOrRefresh,omitempty"`
 	Configure      *struct {
-	} `ic:"Configure,variant"`
+	} `ic:"Configure,variant" json:"Configure,omitempty"`
 	RegisterVote *struct {
-	} `ic:"RegisterVote,variant"`
-	Merge              *MergeResponse              `ic:"Merge,variant"`
-	DisburseToNeuron   *SpawnResponse              `ic:"DisburseToNeuron,variant"`
-	MakeProposal       *MakeProposalResponse       `ic:"MakeProposal,variant"`
-	StakeMaturity      *StakeMaturityResponse      `ic:"StakeMaturity,variant"`
-	MergeMaturity      *MergeMaturityResponse      `ic:"MergeMaturity,variant"`
-	Disburse           *DisburseResponse           `ic:"Disburse,variant"`
-	RefreshVotingPower *RefreshVotingPowerResponse `ic:"RefreshVotingPower,variant"`
+	} `ic:"RegisterVote,variant" json:"RegisterVote,omitempty"`
+	Merge              *MergeResponse              `ic:"Merge,variant" json:"Merge,omitempty"`
+	DisburseToNeuron   *SpawnResponse              `ic:"DisburseToNeuron,variant" json:"DisburseToNeuron,omitempty"`
+	MakeProposal       *MakeProposalResponse       `ic:"MakeProposal,variant" json:"MakeProposal,omitempty"`
+	StakeMaturity      *StakeMaturityResponse      `ic:"StakeMaturity,variant" json:"StakeMaturity,omitempty"`
+	MergeMaturity      *MergeMaturityResponse      `ic:"MergeMaturity,variant" json:"MergeMaturity,omitempty"`
+	Disburse           *DisburseResponse           `ic:"Disburse,variant" json:"Disburse,omitempty"`
+	RefreshVotingPower *RefreshVotingPowerResponse `ic:"RefreshVotingPower,variant" json:"RefreshVotingPower,omitempty"`
 }
 
 type Command2 struct {
-	Spawn            *NeuronId         `ic:"Spawn,variant"`
-	Split            *Split            `ic:"Split,variant"`
-	Configure        *Configure        `ic:"Configure,variant"`
-	Merge            *Merge            `ic:"Merge,variant"`
-	DisburseToNeuron *DisburseToNeuron `ic:"DisburseToNeuron,variant"`
+	Spawn            *NeuronId         `ic:"Spawn,variant" json:"Spawn,omitempty"`
+	Split            *Split            `ic:"Split,variant" json:"Split,omitempty"`
+	Configure        *Configure        `ic:"Configure,variant" json:"Configure,omitempty"`
+	Merge            *Merge            `ic:"Merge,variant" json:"Merge,omitempty"`
+	DisburseToNeuron *DisburseToNeuron `ic:"DisburseToNeuron,variant" json:"DisburseToNeuron,omitempty"`
 	SyncCommand      *struct {
-	} `ic:"SyncCommand,variant"`
-	ClaimOrRefreshNeuron *ClaimOrRefresh `ic:"ClaimOrRefreshNeuron,variant"`
-	MergeMaturity        *MergeMaturity  `ic:"MergeMaturity,variant"`
-	Disburse             *Disburse       `ic:"Disburse,variant"`
+	} `ic:"SyncCommand,variant" json:"SyncCommand,omitempty"`
+	ClaimOrRefreshNeuron *ClaimOrRefresh `ic:"ClaimOrRefreshNeuron,variant" json:"ClaimOrRefreshNeuron,omitempty"`
+	MergeMaturity        *MergeMaturity  `ic:"MergeMaturity,variant" json:"MergeMaturity,omitempty"`
+	Disburse             *Disburse       `ic:"Disburse,variant" json:"Disburse,omitempty"`
 }
 
 type Committed struct {
@@ -663,8 +664,8 @@ type DisburseToNeuron struct {
 }
 
 type DissolveState struct {
-	DissolveDelaySeconds          *uint64 `ic:"DissolveDelaySeconds,variant"`
-	WhenDissolvedTimestampSeconds *uint64 `ic:"WhenDissolvedTimestampSeconds,variant"`
+	DissolveDelaySeconds          *uint64 `ic:"DissolveDelaySeconds,variant" json:"DissolveDelaySeconds,omitempty"`
+	WhenDissolvedTimestampSeconds *uint64 `ic:"WhenDissolvedTimestampSeconds,variant" json:"WhenDissolvedTimestampSeconds,omitempty"`
 }
 
 type Duration struct {
@@ -803,9 +804,8 @@ type GovernanceCachedMetrics struct {
 		Field0 uint64  `ic:"0" json:"0"`
 		Field1 float64 `ic:"1" json:"1"`
 	} `ic:"dissolving_neurons_e8s_buckets_ect" json:"dissolving_neurons_e8s_buckets_ect"`
-	NonSelfAuthenticatingControllerNeuronSubsetMetrics *NeuronSubsetMetrics `ic:"non_self_authenticating_controller_neuron_subset_metrics,omitempty" json:"non_self_authenticating_controller_neuron_subset_metrics,omitempty"`
-	DissolvingNeuronsCount                             uint64               `ic:"dissolving_neurons_count" json:"dissolving_neurons_count"`
-	DissolvingNeuronsE8sBuckets                        []struct {
+	DissolvingNeuronsCount      uint64 `ic:"dissolving_neurons_count" json:"dissolving_neurons_count"`
+	DissolvingNeuronsE8sBuckets []struct {
 		Field0 uint64  `ic:"0" json:"0"`
 		Field1 float64 `ic:"1" json:"1"`
 	} `ic:"dissolving_neurons_e8s_buckets" json:"dissolving_neurons_e8s_buckets"`
@@ -815,9 +815,12 @@ type GovernanceCachedMetrics struct {
 		Field0 uint64  `ic:"0" json:"0"`
 		Field1 float64 `ic:"1" json:"1"`
 	} `ic:"not_dissolving_neurons_e8s_buckets_seed" json:"not_dissolving_neurons_e8s_buckets_seed"`
-	PublicNeuronSubsetMetrics *NeuronSubsetMetrics `ic:"public_neuron_subset_metrics,omitempty" json:"public_neuron_subset_metrics,omitempty"`
-	TimestampSeconds          uint64               `ic:"timestamp_seconds" json:"timestamp_seconds"`
-	SeedNeuronCount           uint64               `ic:"seed_neuron_count" json:"seed_neuron_count"`
+	TimestampSeconds                                   uint64               `ic:"timestamp_seconds" json:"timestamp_seconds"`
+	SeedNeuronCount                                    uint64               `ic:"seed_neuron_count" json:"seed_neuron_count"`
+	NonSelfAuthenticatingControllerNeuronSubsetMetrics *NeuronSubsetMetrics `ic:"non_self_authenticating_controller_neuron_subset_metrics,omitempty" json:"non_self_authenticating_controller_neuron_subset_metrics,omitempty"`
+	PublicNeuronSubsetMetrics                          *NeuronSubsetMetrics `ic:"public_neuron_subset_metrics,omitempty" json:"public_neuron_subset_metrics,omitempty"`
+	DecliningVotingPowerNeuronSubsetMetrics            *NeuronSubsetMetrics `ic:"declining_voting_power_neuron_subset_metrics,omitempty" json:"declining_voting_power_neuron_subset_metrics,omitempty"`
+	FullyLostVotingPowerNeuronSubsetMetrics            *NeuronSubsetMetrics `ic:"fully_lost_voting_power_neuron_subset_metrics,omitempty" json:"fully_lost_voting_power_neuron_subset_metrics,omitempty"`
 }
 
 type GovernanceError struct {
@@ -894,10 +897,13 @@ type ListKnownNeuronsResponse struct {
 }
 
 type ListNeurons struct {
-	IncludePublicNeuronsInFullNeurons   *bool    `ic:"include_public_neurons_in_full_neurons,omitempty" json:"include_public_neurons_in_full_neurons,omitempty"`
-	NeuronIds                           []uint64 `ic:"neuron_ids" json:"neuron_ids"`
-	IncludeEmptyNeuronsReadableByCaller *bool    `ic:"include_empty_neurons_readable_by_caller,omitempty" json:"include_empty_neurons_readable_by_caller,omitempty"`
-	IncludeNeuronsReadableByCaller      bool     `ic:"include_neurons_readable_by_caller" json:"include_neurons_readable_by_caller"`
+	NeuronIds                           []uint64            `ic:"neuron_ids" json:"neuron_ids"`
+	IncludeNeuronsReadableByCaller      bool                `ic:"include_neurons_readable_by_caller" json:"include_neurons_readable_by_caller"`
+	IncludeEmptyNeuronsReadableByCaller *bool               `ic:"include_empty_neurons_readable_by_caller,omitempty" json:"include_empty_neurons_readable_by_caller,omitempty"`
+	IncludePublicNeuronsInFullNeurons   *bool               `ic:"include_public_neurons_in_full_neurons,omitempty" json:"include_public_neurons_in_full_neurons,omitempty"`
+	PageNumber                          *uint64             `ic:"page_number,omitempty" json:"page_number,omitempty"`
+	PageSize                            *uint64             `ic:"page_size,omitempty" json:"page_size,omitempty"`
+	NeuronSubaccounts                   *[]NeuronSubaccount `ic:"neuron_subaccounts,omitempty" json:"neuron_subaccounts,omitempty"`
 }
 
 type ListNeuronsResponse struct {
@@ -905,7 +911,8 @@ type ListNeuronsResponse struct {
 		Field0 uint64     `ic:"0" json:"0"`
 		Field1 NeuronInfo `ic:"1" json:"1"`
 	} `ic:"neuron_infos" json:"neuron_infos"`
-	FullNeurons []Neuron `ic:"full_neurons" json:"full_neurons"`
+	FullNeurons         []Neuron `ic:"full_neurons" json:"full_neurons"`
+	TotalPagesAvailable *uint64  `ic:"total_pages_available,omitempty" json:"total_pages_available,omitempty"`
 }
 
 type ListNodeProviderRewardsRequest struct {
@@ -959,24 +966,25 @@ type ManageNeuron struct {
 }
 
 type ManageNeuronCommandRequest struct {
-	Spawn            *Spawn               `ic:"Spawn,variant"`
-	Split            *Split               `ic:"Split,variant"`
-	Follow           *Follow              `ic:"Follow,variant"`
-	ClaimOrRefresh   *ClaimOrRefresh      `ic:"ClaimOrRefresh,variant"`
-	Configure        *Configure           `ic:"Configure,variant"`
-	RegisterVote     *RegisterVote        `ic:"RegisterVote,variant"`
-	Merge            *Merge               `ic:"Merge,variant"`
-	DisburseToNeuron *DisburseToNeuron    `ic:"DisburseToNeuron,variant"`
-	MakeProposal     *MakeProposalRequest `ic:"MakeProposal,variant"`
-	StakeMaturity    *StakeMaturity       `ic:"StakeMaturity,variant"`
-	MergeMaturity    *MergeMaturity       `ic:"MergeMaturity,variant"`
-	Disburse         *Disburse            `ic:"Disburse,variant"`
+	Spawn              *Spawn               `ic:"Spawn,variant" json:"Spawn,omitempty"`
+	Split              *Split               `ic:"Split,variant" json:"Split,omitempty"`
+	Follow             *Follow              `ic:"Follow,variant" json:"Follow,omitempty"`
+	ClaimOrRefresh     *ClaimOrRefresh      `ic:"ClaimOrRefresh,variant" json:"ClaimOrRefresh,omitempty"`
+	Configure          *Configure           `ic:"Configure,variant" json:"Configure,omitempty"`
+	RegisterVote       *RegisterVote        `ic:"RegisterVote,variant" json:"RegisterVote,omitempty"`
+	Merge              *Merge               `ic:"Merge,variant" json:"Merge,omitempty"`
+	DisburseToNeuron   *DisburseToNeuron    `ic:"DisburseToNeuron,variant" json:"DisburseToNeuron,omitempty"`
+	MakeProposal       *MakeProposalRequest `ic:"MakeProposal,variant" json:"MakeProposal,omitempty"`
+	StakeMaturity      *StakeMaturity       `ic:"StakeMaturity,variant" json:"StakeMaturity,omitempty"`
+	MergeMaturity      *MergeMaturity       `ic:"MergeMaturity,variant" json:"MergeMaturity,omitempty"`
+	Disburse           *Disburse            `ic:"Disburse,variant" json:"Disburse,omitempty"`
+	RefreshVotingPower *RefreshVotingPower  `ic:"RefreshVotingPower,variant" json:"RefreshVotingPower,omitempty"`
 }
 
 type ManageNeuronRequest struct {
-	Id                   *NeuronId                   `ic:"id,omitempty" json:"id,omitempty"`
-	Command              *ManageNeuronCommandRequest `ic:"command,omitempty" json:"command,omitempty"`
 	NeuronIdOrSubaccount *NeuronIdOrSubaccount       `ic:"neuron_id_or_subaccount,omitempty" json:"neuron_id_or_subaccount,omitempty"`
+	Command              *ManageNeuronCommandRequest `ic:"command,omitempty" json:"command,omitempty"`
+	Id                   *NeuronId                   `ic:"id,omitempty" json:"id,omitempty"`
 }
 
 type ManageNeuronResponse struct {
@@ -1095,8 +1103,8 @@ type NeuronId struct {
 }
 
 type NeuronIdOrSubaccount struct {
-	Subaccount *[]byte   `ic:"Subaccount,variant"`
-	NeuronId   *NeuronId `ic:"NeuronId,variant"`
+	Subaccount *[]byte   `ic:"Subaccount,variant" json:"Subaccount,omitempty"`
+	NeuronId   *NeuronId `ic:"NeuronId,variant" json:"NeuronId,omitempty"`
 }
 
 type NeuronInFlightCommand struct {
@@ -1132,32 +1140,46 @@ type NeuronStakeTransfer struct {
 	BlockHeight       uint64               `ic:"block_height" json:"block_height"`
 }
 
+type NeuronSubaccount struct {
+	Subaccount []byte `ic:"subaccount" json:"subaccount"`
+}
+
 type NeuronSubsetMetrics struct {
-	TotalMaturityE8sEquivalent   *uint64 `ic:"total_maturity_e8s_equivalent,omitempty" json:"total_maturity_e8s_equivalent,omitempty"`
-	MaturityE8sEquivalentBuckets []struct {
+	Count                            *uint64 `ic:"count,omitempty" json:"count,omitempty"`
+	TotalStakedE8s                   *uint64 `ic:"total_staked_e8s,omitempty" json:"total_staked_e8s,omitempty"`
+	TotalMaturityE8sEquivalent       *uint64 `ic:"total_maturity_e8s_equivalent,omitempty" json:"total_maturity_e8s_equivalent,omitempty"`
+	TotalStakedMaturityE8sEquivalent *uint64 `ic:"total_staked_maturity_e8s_equivalent,omitempty" json:"total_staked_maturity_e8s_equivalent,omitempty"`
+	TotalVotingPower                 *uint64 `ic:"total_voting_power,omitempty" json:"total_voting_power,omitempty"`
+	TotalDecidingVotingPower         *uint64 `ic:"total_deciding_voting_power,omitempty" json:"total_deciding_voting_power,omitempty"`
+	TotalPotentialVotingPower        *uint64 `ic:"total_potential_voting_power,omitempty" json:"total_potential_voting_power,omitempty"`
+	CountBuckets                     []struct {
 		Field0 uint64 `ic:"0" json:"0"`
 		Field1 uint64 `ic:"1" json:"1"`
-	} `ic:"maturity_e8s_equivalent_buckets" json:"maturity_e8s_equivalent_buckets"`
-	VotingPowerBuckets []struct {
-		Field0 uint64 `ic:"0" json:"0"`
-		Field1 uint64 `ic:"1" json:"1"`
-	} `ic:"voting_power_buckets" json:"voting_power_buckets"`
-	TotalStakedE8s                     *uint64 `ic:"total_staked_e8s,omitempty" json:"total_staked_e8s,omitempty"`
-	Count                              *uint64 `ic:"count,omitempty" json:"count,omitempty"`
-	TotalStakedMaturityE8sEquivalent   *uint64 `ic:"total_staked_maturity_e8s_equivalent,omitempty" json:"total_staked_maturity_e8s_equivalent,omitempty"`
-	StakedMaturityE8sEquivalentBuckets []struct {
-		Field0 uint64 `ic:"0" json:"0"`
-		Field1 uint64 `ic:"1" json:"1"`
-	} `ic:"staked_maturity_e8s_equivalent_buckets" json:"staked_maturity_e8s_equivalent_buckets"`
+	} `ic:"count_buckets" json:"count_buckets"`
 	StakedE8sBuckets []struct {
 		Field0 uint64 `ic:"0" json:"0"`
 		Field1 uint64 `ic:"1" json:"1"`
 	} `ic:"staked_e8s_buckets" json:"staked_e8s_buckets"`
-	TotalVotingPower *uint64 `ic:"total_voting_power,omitempty" json:"total_voting_power,omitempty"`
-	CountBuckets     []struct {
+	MaturityE8sEquivalentBuckets []struct {
 		Field0 uint64 `ic:"0" json:"0"`
 		Field1 uint64 `ic:"1" json:"1"`
-	} `ic:"count_buckets" json:"count_buckets"`
+	} `ic:"maturity_e8s_equivalent_buckets" json:"maturity_e8s_equivalent_buckets"`
+	StakedMaturityE8sEquivalentBuckets []struct {
+		Field0 uint64 `ic:"0" json:"0"`
+		Field1 uint64 `ic:"1" json:"1"`
+	} `ic:"staked_maturity_e8s_equivalent_buckets" json:"staked_maturity_e8s_equivalent_buckets"`
+	VotingPowerBuckets []struct {
+		Field0 uint64 `ic:"0" json:"0"`
+		Field1 uint64 `ic:"1" json:"1"`
+	} `ic:"voting_power_buckets" json:"voting_power_buckets"`
+	DecidingVotingPowerBuckets []struct {
+		Field0 uint64 `ic:"0" json:"0"`
+		Field1 uint64 `ic:"1" json:"1"`
+	} `ic:"deciding_voting_power_buckets" json:"deciding_voting_power_buckets"`
+	PotentialVotingPowerBuckets []struct {
+		Field0 uint64 `ic:"0" json:"0"`
+		Field1 uint64 `ic:"1" json:"1"`
+	} `ic:"potential_voting_power_buckets" json:"potential_voting_power_buckets"`
 }
 
 type NeuronsFundAuditInfo struct {
@@ -1237,20 +1259,20 @@ type OpenSnsTokenSwap struct {
 }
 
 type Operation struct {
-	RemoveHotKey            *RemoveHotKey            `ic:"RemoveHotKey,variant"`
-	AddHotKey               *AddHotKey               `ic:"AddHotKey,variant"`
-	ChangeAutoStakeMaturity *ChangeAutoStakeMaturity `ic:"ChangeAutoStakeMaturity,variant"`
+	RemoveHotKey            *RemoveHotKey            `ic:"RemoveHotKey,variant" json:"RemoveHotKey,omitempty"`
+	AddHotKey               *AddHotKey               `ic:"AddHotKey,variant" json:"AddHotKey,omitempty"`
+	ChangeAutoStakeMaturity *ChangeAutoStakeMaturity `ic:"ChangeAutoStakeMaturity,variant" json:"ChangeAutoStakeMaturity,omitempty"`
 	StopDissolving          *struct {
-	} `ic:"StopDissolving,variant"`
+	} `ic:"StopDissolving,variant" json:"StopDissolving,omitempty"`
 	StartDissolving *struct {
-	} `ic:"StartDissolving,variant"`
-	IncreaseDissolveDelay *IncreaseDissolveDelay `ic:"IncreaseDissolveDelay,variant"`
-	SetVisibility         *SetVisibility         `ic:"SetVisibility,variant"`
+	} `ic:"StartDissolving,variant" json:"StartDissolving,omitempty"`
+	IncreaseDissolveDelay *IncreaseDissolveDelay `ic:"IncreaseDissolveDelay,variant" json:"IncreaseDissolveDelay,omitempty"`
+	SetVisibility         *SetVisibility         `ic:"SetVisibility,variant" json:"SetVisibility,omitempty"`
 	JoinCommunityFund     *struct {
-	} `ic:"JoinCommunityFund,variant"`
+	} `ic:"JoinCommunityFund,variant" json:"JoinCommunityFund,omitempty"`
 	LeaveCommunityFund *struct {
-	} `ic:"LeaveCommunityFund,variant"`
-	SetDissolveTimestamp *SetDissolveTimestamp `ic:"SetDissolveTimestamp,variant"`
+	} `ic:"LeaveCommunityFund,variant" json:"LeaveCommunityFund,omitempty"`
+	SetDissolveTimestamp *SetDissolveTimestamp `ic:"SetDissolveTimestamp,variant" json:"SetDissolveTimestamp,omitempty"`
 }
 
 type Params struct {
@@ -1276,7 +1298,7 @@ type Principals struct {
 }
 
 type Progress struct {
-	LastNeuronId *NeuronId `ic:"LastNeuronId,variant"`
+	LastNeuronId *NeuronId `ic:"LastNeuronId,variant" json:"LastNeuronId,omitempty"`
 }
 
 type Proposal struct {
@@ -1287,19 +1309,19 @@ type Proposal struct {
 }
 
 type ProposalActionRequest struct {
-	RegisterKnownNeuron        *KnownNeuron                `ic:"RegisterKnownNeuron,variant"`
-	ManageNeuron               *ManageNeuronRequest        `ic:"ManageNeuron,variant"`
-	UpdateCanisterSettings     *UpdateCanisterSettings     `ic:"UpdateCanisterSettings,variant"`
-	InstallCode                *InstallCodeRequest         `ic:"InstallCode,variant"`
-	StopOrStartCanister        *StopOrStartCanister        `ic:"StopOrStartCanister,variant"`
-	CreateServiceNervousSystem *CreateServiceNervousSystem `ic:"CreateServiceNervousSystem,variant"`
-	ExecuteNnsFunction         *ExecuteNnsFunction         `ic:"ExecuteNnsFunction,variant"`
-	RewardNodeProvider         *RewardNodeProvider         `ic:"RewardNodeProvider,variant"`
-	RewardNodeProviders        *RewardNodeProviders        `ic:"RewardNodeProviders,variant"`
-	ManageNetworkEconomics     *NetworkEconomics           `ic:"ManageNetworkEconomics,variant"`
-	ApproveGenesisKyc          *Principals                 `ic:"ApproveGenesisKyc,variant"`
-	AddOrRemoveNodeProvider    *AddOrRemoveNodeProvider    `ic:"AddOrRemoveNodeProvider,variant"`
-	Motion                     *Motion                     `ic:"Motion,variant"`
+	RegisterKnownNeuron        *KnownNeuron                `ic:"RegisterKnownNeuron,variant" json:"RegisterKnownNeuron,omitempty"`
+	ManageNeuron               *ManageNeuronRequest        `ic:"ManageNeuron,variant" json:"ManageNeuron,omitempty"`
+	UpdateCanisterSettings     *UpdateCanisterSettings     `ic:"UpdateCanisterSettings,variant" json:"UpdateCanisterSettings,omitempty"`
+	InstallCode                *InstallCodeRequest         `ic:"InstallCode,variant" json:"InstallCode,omitempty"`
+	StopOrStartCanister        *StopOrStartCanister        `ic:"StopOrStartCanister,variant" json:"StopOrStartCanister,omitempty"`
+	CreateServiceNervousSystem *CreateServiceNervousSystem `ic:"CreateServiceNervousSystem,variant" json:"CreateServiceNervousSystem,omitempty"`
+	ExecuteNnsFunction         *ExecuteNnsFunction         `ic:"ExecuteNnsFunction,variant" json:"ExecuteNnsFunction,omitempty"`
+	RewardNodeProvider         *RewardNodeProvider         `ic:"RewardNodeProvider,variant" json:"RewardNodeProvider,omitempty"`
+	RewardNodeProviders        *RewardNodeProviders        `ic:"RewardNodeProviders,variant" json:"RewardNodeProviders,omitempty"`
+	ManageNetworkEconomics     *NetworkEconomics           `ic:"ManageNetworkEconomics,variant" json:"ManageNetworkEconomics,omitempty"`
+	ApproveGenesisKyc          *Principals                 `ic:"ApproveGenesisKyc,variant" json:"ApproveGenesisKyc,omitempty"`
+	AddOrRemoveNodeProvider    *AddOrRemoveNodeProvider    `ic:"AddOrRemoveNodeProvider,variant" json:"AddOrRemoveNodeProvider,omitempty"`
+	Motion                     *Motion                     `ic:"Motion,variant" json:"Motion,omitempty"`
 }
 
 type ProposalData struct {
@@ -1382,60 +1404,60 @@ type RestoreAgingSummary struct {
 }
 
 type Result struct {
-	Ok  *idl.Null        `ic:"Ok,variant"`
-	Err *GovernanceError `ic:"Err,variant"`
+	Ok  *idl.Null        `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result1 struct {
-	Error    *GovernanceError `ic:"Error,variant"`
-	NeuronId *NeuronId        `ic:"NeuronId,variant"`
+	Error    *GovernanceError `ic:"Error,variant" json:"Error,omitempty"`
+	NeuronId *NeuronId        `ic:"NeuronId,variant" json:"NeuronId,omitempty"`
 }
 
 type Result10 struct {
-	Ok  *Ok1             `ic:"Ok,variant"`
-	Err *GovernanceError `ic:"Err,variant"`
+	Ok  *Ok1             `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result2 struct {
-	Ok  *Neuron          `ic:"Ok,variant"`
-	Err *GovernanceError `ic:"Err,variant"`
+	Ok  *Neuron          `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result3 struct {
-	Ok  *GovernanceCachedMetrics `ic:"Ok,variant"`
-	Err *GovernanceError         `ic:"Err,variant"`
+	Ok  *GovernanceCachedMetrics `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError         `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result4 struct {
-	Ok  *MonthlyNodeProviderRewards `ic:"Ok,variant"`
-	Err *GovernanceError            `ic:"Err,variant"`
+	Ok  *MonthlyNodeProviderRewards `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError            `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result5 struct {
-	Ok  *NeuronInfo      `ic:"Ok,variant"`
-	Err *GovernanceError `ic:"Err,variant"`
+	Ok  *NeuronInfo      `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result6 struct {
-	Ok  *Ok              `ic:"Ok,variant"`
-	Err *GovernanceError `ic:"Err,variant"`
+	Ok  *Ok              `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result7 struct {
-	Ok  *NodeProvider    `ic:"Ok,variant"`
-	Err *GovernanceError `ic:"Err,variant"`
+	Ok  *NodeProvider    `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *GovernanceError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Result8 struct {
-	Committed *Committed `ic:"Committed,variant"`
+	Committed *Committed `ic:"Committed,variant" json:"Committed,omitempty"`
 	Aborted   *struct {
-	} `ic:"Aborted,variant"`
+	} `ic:"Aborted,variant" json:"Aborted,omitempty"`
 }
 
 type Result9 struct {
-	Committed *Committed1 `ic:"Committed,variant"`
+	Committed *Committed1 `ic:"Committed,variant" json:"Committed,omitempty"`
 	Aborted   *struct {
-	} `ic:"Aborted,variant"`
+	} `ic:"Aborted,variant" json:"Aborted,omitempty"`
 }
 
 type RewardEvent struct {
@@ -1449,8 +1471,8 @@ type RewardEvent struct {
 }
 
 type RewardMode struct {
-	RewardToNeuron  *RewardToNeuron  `ic:"RewardToNeuron,variant"`
-	RewardToAccount *RewardToAccount `ic:"RewardToAccount,variant"`
+	RewardToNeuron  *RewardToNeuron  `ic:"RewardToNeuron,variant" json:"RewardToNeuron,omitempty"`
+	RewardToAccount *RewardToAccount `ic:"RewardToAccount,variant" json:"RewardToAccount,omitempty"`
 }
 
 type RewardNodeProvider struct {

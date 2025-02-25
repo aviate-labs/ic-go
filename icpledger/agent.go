@@ -343,6 +343,20 @@ func (a Agent) Icrc2TransferFrom(arg0 TransferFromArgs) (*TransferFromResult, er
 	return &r0, nil
 }
 
+// IsLedgerReady calls the "is_ledger_ready" method on the "icpledger" canister.
+func (a Agent) IsLedgerReady() (*bool, error) {
+	var r0 bool
+	if err := a.Agent.Query(
+		a.CanisterId,
+		"is_ledger_ready",
+		[]any{},
+		[]any{&r0},
+	); err != nil {
+		return nil, err
+	}
+	return &r0, nil
+}
+
 // Name calls the "name" method on the "icpledger" canister.
 func (a Agent) Name() (*struct {
 	Name string `ic:"name" json:"name"`
@@ -473,33 +487,33 @@ type ApproveArgs struct {
 type ApproveError struct {
 	BadFee *struct {
 		ExpectedFee Icrc1Tokens `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	InsufficientFunds *struct {
 		Balance Icrc1Tokens `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
 	AllowanceChanged *struct {
 		CurrentAllowance Icrc1Tokens `ic:"current_allowance" json:"current_allowance"`
-	} `ic:"AllowanceChanged,variant"`
+	} `ic:"AllowanceChanged,variant" json:"AllowanceChanged,omitempty"`
 	Expired *struct {
 		LedgerTime uint64 `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"Expired,variant"`
-	TooOld          *idl.Null `ic:"TooOld,variant"`
+	} `ic:"Expired,variant" json:"Expired,omitempty"`
+	TooOld          *idl.Null `ic:"TooOld,variant" json:"TooOld,omitempty"`
 	CreatedInFuture *struct {
 		LedgerTime uint64 `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"CreatedInFuture,variant"`
+	} `ic:"CreatedInFuture,variant" json:"CreatedInFuture,omitempty"`
 	Duplicate *struct {
 		DuplicateOf Icrc1BlockIndex `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"Duplicate,variant"`
-	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant"`
+	} `ic:"Duplicate,variant" json:"Duplicate,omitempty"`
+	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant" json:"TemporarilyUnavailable,omitempty"`
 	GenericError           *struct {
 		ErrorCode idl.Nat `ic:"error_code" json:"error_code"`
 		Message   string  `ic:"message" json:"message"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type ApproveResult struct {
-	Ok  *Icrc1BlockIndex `ic:"Ok,variant"`
-	Err *ApproveError    `ic:"Err,variant"`
+	Ok  *Icrc1BlockIndex `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *ApproveError    `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Archive struct {
@@ -568,30 +582,30 @@ type Icrc1Tokens = idl.Nat
 type Icrc1TransferError struct {
 	BadFee *struct {
 		ExpectedFee Icrc1Tokens `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	BadBurn *struct {
 		MinBurnAmount Icrc1Tokens `ic:"min_burn_amount" json:"min_burn_amount"`
-	} `ic:"BadBurn,variant"`
+	} `ic:"BadBurn,variant" json:"BadBurn,omitempty"`
 	InsufficientFunds *struct {
 		Balance Icrc1Tokens `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
-	TooOld          *idl.Null `ic:"TooOld,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
+	TooOld          *idl.Null `ic:"TooOld,variant" json:"TooOld,omitempty"`
 	CreatedInFuture *struct {
 		LedgerTime uint64 `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"CreatedInFuture,variant"`
-	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant"`
+	} `ic:"CreatedInFuture,variant" json:"CreatedInFuture,omitempty"`
+	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant" json:"TemporarilyUnavailable,omitempty"`
 	Duplicate              *struct {
 		DuplicateOf Icrc1BlockIndex `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"Duplicate,variant"`
+	} `ic:"Duplicate,variant" json:"Duplicate,omitempty"`
 	GenericError *struct {
 		ErrorCode idl.Nat `ic:"error_code" json:"error_code"`
 		Message   string  `ic:"message" json:"message"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type Icrc1TransferResult struct {
-	Ok  *Icrc1BlockIndex    `ic:"Ok,variant"`
-	Err *Icrc1TransferError `ic:"Err,variant"`
+	Ok  *Icrc1BlockIndex    `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *Icrc1TransferError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Icrc21ConsentInfo struct {
@@ -600,12 +614,12 @@ type Icrc21ConsentInfo struct {
 }
 
 type Icrc21ConsentMessage struct {
-	GenericDisplayMessage *string `ic:"GenericDisplayMessage,variant"`
+	GenericDisplayMessage *string `ic:"GenericDisplayMessage,variant" json:"GenericDisplayMessage,omitempty"`
 	LineDisplayMessage    *struct {
 		Pages []struct {
 			Lines []string `ic:"lines" json:"lines"`
 		} `ic:"pages" json:"pages"`
-	} `ic:"LineDisplayMessage,variant"`
+	} `ic:"LineDisplayMessage,variant" json:"LineDisplayMessage,omitempty"`
 }
 
 type Icrc21ConsentMessageMetadata struct {
@@ -620,29 +634,29 @@ type Icrc21ConsentMessageRequest struct {
 }
 
 type Icrc21ConsentMessageResponse struct {
-	Ok  *Icrc21ConsentInfo `ic:"Ok,variant"`
-	Err *Icrc21Error       `ic:"Err,variant"`
+	Ok  *Icrc21ConsentInfo `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *Icrc21Error       `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type Icrc21ConsentMessageSpec struct {
 	Metadata   Icrc21ConsentMessageMetadata `ic:"metadata" json:"metadata"`
 	DeviceSpec *struct {
-		GenericDisplay *idl.Null `ic:"GenericDisplay,variant"`
+		GenericDisplay *idl.Null `ic:"GenericDisplay,variant" json:"GenericDisplay,omitempty"`
 		LineDisplay    *struct {
 			CharactersPerLine uint16 `ic:"characters_per_line" json:"characters_per_line"`
 			LinesPerPage      uint16 `ic:"lines_per_page" json:"lines_per_page"`
-		} `ic:"LineDisplay,variant"`
+		} `ic:"LineDisplay,variant" json:"LineDisplay,omitempty"`
 	} `ic:"device_spec,omitempty" json:"device_spec,omitempty"`
 }
 
 type Icrc21Error struct {
-	UnsupportedCanisterCall   *Icrc21ErrorInfo `ic:"UnsupportedCanisterCall,variant"`
-	ConsentMessageUnavailable *Icrc21ErrorInfo `ic:"ConsentMessageUnavailable,variant"`
-	InsufficientPayment       *Icrc21ErrorInfo `ic:"InsufficientPayment,variant"`
+	UnsupportedCanisterCall   *Icrc21ErrorInfo `ic:"UnsupportedCanisterCall,variant" json:"UnsupportedCanisterCall,omitempty"`
+	ConsentMessageUnavailable *Icrc21ErrorInfo `ic:"ConsentMessageUnavailable,variant" json:"ConsentMessageUnavailable,omitempty"`
+	InsufficientPayment       *Icrc21ErrorInfo `ic:"InsufficientPayment,variant" json:"InsufficientPayment,omitempty"`
 	GenericError              *struct {
 		ErrorCode   idl.Nat `ic:"error_code" json:"error_code"`
 		Description string  `ic:"description" json:"description"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type Icrc21ErrorInfo struct {
@@ -656,21 +670,19 @@ type InitArgs struct {
 		Field0 TextAccountIdentifier `ic:"0" json:"0"`
 		Field1 Tokens                `ic:"1" json:"1"`
 	} `ic:"initial_values" json:"initial_values"`
-	MaxMessageSizeBytes          *uint64               `ic:"max_message_size_bytes,omitempty" json:"max_message_size_bytes,omitempty"`
-	TransactionWindow            *Duration             `ic:"transaction_window,omitempty" json:"transaction_window,omitempty"`
-	ArchiveOptions               *ArchiveOptions       `ic:"archive_options,omitempty" json:"archive_options,omitempty"`
-	SendWhitelist                []principal.Principal `ic:"send_whitelist" json:"send_whitelist"`
-	TransferFee                  *Tokens               `ic:"transfer_fee,omitempty" json:"transfer_fee,omitempty"`
-	TokenSymbol                  *string               `ic:"token_symbol,omitempty" json:"token_symbol,omitempty"`
-	TokenName                    *string               `ic:"token_name,omitempty" json:"token_name,omitempty"`
-	FeatureFlags                 *FeatureFlags         `ic:"feature_flags,omitempty" json:"feature_flags,omitempty"`
-	MaximumNumberOfAccounts      *uint64               `ic:"maximum_number_of_accounts,omitempty" json:"maximum_number_of_accounts,omitempty"`
-	AccountsOverflowTrimQuantity *uint64               `ic:"accounts_overflow_trim_quantity,omitempty" json:"accounts_overflow_trim_quantity,omitempty"`
+	MaxMessageSizeBytes *uint64               `ic:"max_message_size_bytes,omitempty" json:"max_message_size_bytes,omitempty"`
+	TransactionWindow   *Duration             `ic:"transaction_window,omitempty" json:"transaction_window,omitempty"`
+	ArchiveOptions      *ArchiveOptions       `ic:"archive_options,omitempty" json:"archive_options,omitempty"`
+	SendWhitelist       []principal.Principal `ic:"send_whitelist" json:"send_whitelist"`
+	TransferFee         *Tokens               `ic:"transfer_fee,omitempty" json:"transfer_fee,omitempty"`
+	TokenSymbol         *string               `ic:"token_symbol,omitempty" json:"token_symbol,omitempty"`
+	TokenName           *string               `ic:"token_name,omitempty" json:"token_name,omitempty"`
+	FeatureFlags        *FeatureFlags         `ic:"feature_flags,omitempty" json:"feature_flags,omitempty"`
 }
 
 type LedgerCanisterPayload struct {
-	Init    *InitArgs     `ic:"Init,variant"`
-	Upgrade **UpgradeArgs `ic:"Upgrade,variant"`
+	Init    *InitArgs     `ic:"Init,variant" json:"Init,omitempty"`
+	Upgrade **UpgradeArgs `ic:"Upgrade,variant" json:"Upgrade,omitempty"`
 }
 
 type Memo = uint64
@@ -679,19 +691,19 @@ type Operation struct {
 	Mint *struct {
 		To     AccountIdentifier `ic:"to" json:"to"`
 		Amount Tokens            `ic:"amount" json:"amount"`
-	} `ic:"Mint,variant"`
+	} `ic:"Mint,variant" json:"Mint,omitempty"`
 	Burn *struct {
 		From    AccountIdentifier  `ic:"from" json:"from"`
 		Spender *AccountIdentifier `ic:"spender,omitempty" json:"spender,omitempty"`
 		Amount  Tokens             `ic:"amount" json:"amount"`
-	} `ic:"Burn,variant"`
+	} `ic:"Burn,variant" json:"Burn,omitempty"`
 	Transfer *struct {
 		From    AccountIdentifier `ic:"from" json:"from"`
 		To      AccountIdentifier `ic:"to" json:"to"`
 		Amount  Tokens            `ic:"amount" json:"amount"`
 		Fee     Tokens            `ic:"fee" json:"fee"`
 		Spender *[]uint8          `ic:"spender,omitempty" json:"spender,omitempty"`
-	} `ic:"Transfer,variant"`
+	} `ic:"Transfer,variant" json:"Transfer,omitempty"`
 	Approve *struct {
 		From              AccountIdentifier `ic:"from" json:"from"`
 		Spender           AccountIdentifier `ic:"spender" json:"spender"`
@@ -700,25 +712,25 @@ type Operation struct {
 		Fee               Tokens            `ic:"fee" json:"fee"`
 		ExpiresAt         *TimeStamp        `ic:"expires_at,omitempty" json:"expires_at,omitempty"`
 		ExpectedAllowance *Tokens           `ic:"expected_allowance,omitempty" json:"expected_allowance,omitempty"`
-	} `ic:"Approve,variant"`
+	} `ic:"Approve,variant" json:"Approve,omitempty"`
 }
 
 type QueryArchiveError struct {
 	BadFirstBlockIndex *struct {
 		RequestedIndex  BlockIndex `ic:"requested_index" json:"requested_index"`
 		FirstValidIndex BlockIndex `ic:"first_valid_index" json:"first_valid_index"`
-	} `ic:"BadFirstBlockIndex,variant"`
+	} `ic:"BadFirstBlockIndex,variant" json:"BadFirstBlockIndex,omitempty"`
 	Other *struct {
 		ErrorCode    uint64 `ic:"error_code" json:"error_code"`
 		ErrorMessage string `ic:"error_message" json:"error_message"`
-	} `ic:"Other,variant"`
+	} `ic:"Other,variant" json:"Other,omitempty"`
 }
 
 type QueryArchiveFn = idl.Function
 
 type QueryArchiveResult struct {
-	Ok  *BlockRange        `ic:"Ok,variant"`
-	Err *QueryArchiveError `ic:"Err,variant"`
+	Ok  *BlockRange        `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *QueryArchiveError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type QueryBlocksResponse struct {
@@ -786,17 +798,17 @@ type TransferArgs struct {
 type TransferError struct {
 	BadFee *struct {
 		ExpectedFee Tokens `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	InsufficientFunds *struct {
 		Balance Tokens `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
 	TxTooOld *struct {
 		AllowedWindowNanos uint64 `ic:"allowed_window_nanos" json:"allowed_window_nanos"`
-	} `ic:"TxTooOld,variant"`
-	TxCreatedInFuture *idl.Null `ic:"TxCreatedInFuture,variant"`
+	} `ic:"TxTooOld,variant" json:"TxTooOld,omitempty"`
+	TxCreatedInFuture *idl.Null `ic:"TxCreatedInFuture,variant" json:"TxCreatedInFuture,omitempty"`
 	TxDuplicate       *struct {
 		DuplicateOf BlockIndex `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"TxDuplicate,variant"`
+	} `ic:"TxDuplicate,variant" json:"TxDuplicate,omitempty"`
 }
 
 type TransferFee struct {
@@ -819,38 +831,38 @@ type TransferFromArgs struct {
 type TransferFromError struct {
 	BadFee *struct {
 		ExpectedFee Icrc1Tokens `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	BadBurn *struct {
 		MinBurnAmount Icrc1Tokens `ic:"min_burn_amount" json:"min_burn_amount"`
-	} `ic:"BadBurn,variant"`
+	} `ic:"BadBurn,variant" json:"BadBurn,omitempty"`
 	InsufficientFunds *struct {
 		Balance Icrc1Tokens `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
 	InsufficientAllowance *struct {
 		Allowance Icrc1Tokens `ic:"allowance" json:"allowance"`
-	} `ic:"InsufficientAllowance,variant"`
-	TooOld          *idl.Null `ic:"TooOld,variant"`
+	} `ic:"InsufficientAllowance,variant" json:"InsufficientAllowance,omitempty"`
+	TooOld          *idl.Null `ic:"TooOld,variant" json:"TooOld,omitempty"`
 	CreatedInFuture *struct {
 		LedgerTime Icrc1Timestamp `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"CreatedInFuture,variant"`
+	} `ic:"CreatedInFuture,variant" json:"CreatedInFuture,omitempty"`
 	Duplicate *struct {
 		DuplicateOf Icrc1BlockIndex `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"Duplicate,variant"`
-	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant"`
+	} `ic:"Duplicate,variant" json:"Duplicate,omitempty"`
+	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant" json:"TemporarilyUnavailable,omitempty"`
 	GenericError           *struct {
 		ErrorCode idl.Nat `ic:"error_code" json:"error_code"`
 		Message   string  `ic:"message" json:"message"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type TransferFromResult struct {
-	Ok  *Icrc1BlockIndex   `ic:"Ok,variant"`
-	Err *TransferFromError `ic:"Err,variant"`
+	Ok  *Icrc1BlockIndex   `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *TransferFromError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type TransferResult struct {
-	Ok  *BlockIndex    `ic:"Ok,variant"`
-	Err *TransferError `ic:"Err,variant"`
+	Ok  *BlockIndex    `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *TransferError `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type UpgradeArgs struct {
@@ -859,8 +871,8 @@ type UpgradeArgs struct {
 }
 
 type Value struct {
-	Nat  *idl.Nat `ic:"Nat,variant"`
-	Int  *idl.Int `ic:"Int,variant"`
-	Text *string  `ic:"Text,variant"`
-	Blob *[]byte  `ic:"Blob,variant"`
+	Nat  *idl.Nat `ic:"Nat,variant" json:"Nat,omitempty"`
+	Int  *idl.Int `ic:"Int,variant" json:"Int,omitempty"`
+	Text *string  `ic:"Text,variant" json:"Text,omitempty"`
+	Blob *[]byte  `ic:"Blob,variant" json:"Blob,omitempty"`
 }

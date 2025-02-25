@@ -171,12 +171,12 @@ func (a Agent) Icrc1TotalSupply() (*idl.Nat, error) {
 
 // Icrc1Transfer calls the "icrc1_transfer" method on the "icrc1" canister.
 func (a Agent) Icrc1Transfer(arg0 TransferArgs) (*struct {
-	Ok  *idl.Nat       `ic:"Ok,variant"`
-	Err *TransferError `ic:"Err,variant"`
+	Ok  *idl.Nat       `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *TransferError `ic:"Err,variant" json:"Err,omitempty"`
 }, error) {
 	var r0 struct {
-		Ok  *idl.Nat       `ic:"Ok,variant"`
-		Err *TransferError `ic:"Err,variant"`
+		Ok  *idl.Nat       `ic:"Ok,variant" json:"Ok,omitempty"`
+		Err *TransferError `ic:"Err,variant" json:"Err,omitempty"`
 	}
 	if err := a.Agent.Call(
 		a.CanisterId,
@@ -207,30 +207,30 @@ type TransferArgs struct {
 type TransferError struct {
 	BadFee *struct {
 		ExpectedFee idl.Nat `ic:"expected_fee" json:"expected_fee"`
-	} `ic:"BadFee,variant"`
+	} `ic:"BadFee,variant" json:"BadFee,omitempty"`
 	BadBurn *struct {
 		MinBurnAmount idl.Nat `ic:"min_burn_amount" json:"min_burn_amount"`
-	} `ic:"BadBurn,variant"`
+	} `ic:"BadBurn,variant" json:"BadBurn,omitempty"`
 	InsufficientFunds *struct {
 		Balance idl.Nat `ic:"balance" json:"balance"`
-	} `ic:"InsufficientFunds,variant"`
-	TooOld          *idl.Null `ic:"TooOld,variant"`
+	} `ic:"InsufficientFunds,variant" json:"InsufficientFunds,omitempty"`
+	TooOld          *idl.Null `ic:"TooOld,variant" json:"TooOld,omitempty"`
 	CreatedInFuture *struct {
 		LedgerTime Timestamp `ic:"ledger_time" json:"ledger_time"`
-	} `ic:"CreatedInFuture,variant"`
+	} `ic:"CreatedInFuture,variant" json:"CreatedInFuture,omitempty"`
 	Duplicate *struct {
 		DuplicateOf idl.Nat `ic:"duplicate_of" json:"duplicate_of"`
-	} `ic:"Duplicate,variant"`
-	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant"`
+	} `ic:"Duplicate,variant" json:"Duplicate,omitempty"`
+	TemporarilyUnavailable *idl.Null `ic:"TemporarilyUnavailable,variant" json:"TemporarilyUnavailable,omitempty"`
 	GenericError           *struct {
 		ErrorCode idl.Nat `ic:"error_code" json:"error_code"`
 		Message   string  `ic:"message" json:"message"`
-	} `ic:"GenericError,variant"`
+	} `ic:"GenericError,variant" json:"GenericError,omitempty"`
 }
 
 type Value struct {
-	Nat  *idl.Nat `ic:"Nat,variant"`
-	Int  *idl.Int `ic:"Int,variant"`
-	Text *string  `ic:"Text,variant"`
-	Blob *[]byte  `ic:"Blob,variant"`
+	Nat  *idl.Nat `ic:"Nat,variant" json:"Nat,omitempty"`
+	Int  *idl.Int `ic:"Int,variant" json:"Int,omitempty"`
+	Text *string  `ic:"Text,variant" json:"Text,omitempty"`
+	Blob *[]byte  `ic:"Blob,variant" json:"Blob,omitempty"`
 }

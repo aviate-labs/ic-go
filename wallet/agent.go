@@ -581,32 +581,32 @@ type EventKind struct {
 		To     principal.Principal `ic:"to" json:"to"`
 		Amount uint64              `ic:"amount" json:"amount"`
 		Refund uint64              `ic:"refund" json:"refund"`
-	} `ic:"CyclesSent,variant"`
+	} `ic:"CyclesSent,variant" json:"CyclesSent,omitempty"`
 	CyclesReceived *struct {
 		From   principal.Principal `ic:"from" json:"from"`
 		Amount uint64              `ic:"amount" json:"amount"`
 		Memo   *string             `ic:"memo,omitempty" json:"memo,omitempty"`
-	} `ic:"CyclesReceived,variant"`
+	} `ic:"CyclesReceived,variant" json:"CyclesReceived,omitempty"`
 	AddressAdded *struct {
 		Id   principal.Principal `ic:"id" json:"id"`
 		Name *string             `ic:"name,omitempty" json:"name,omitempty"`
 		Role Role                `ic:"role" json:"role"`
-	} `ic:"AddressAdded,variant"`
+	} `ic:"AddressAdded,variant" json:"AddressAdded,omitempty"`
 	AddressRemoved *struct {
 		Id principal.Principal `ic:"id" json:"id"`
-	} `ic:"AddressRemoved,variant"`
+	} `ic:"AddressRemoved,variant" json:"AddressRemoved,omitempty"`
 	CanisterCreated *struct {
 		Canister principal.Principal `ic:"canister" json:"canister"`
 		Cycles   uint64              `ic:"cycles" json:"cycles"`
-	} `ic:"CanisterCreated,variant"`
+	} `ic:"CanisterCreated,variant" json:"CanisterCreated,omitempty"`
 	CanisterCalled *struct {
 		Canister   principal.Principal `ic:"canister" json:"canister"`
 		MethodName string              `ic:"method_name" json:"method_name"`
 		Cycles     uint64              `ic:"cycles" json:"cycles"`
-	} `ic:"CanisterCalled,variant"`
+	} `ic:"CanisterCalled,variant" json:"CanisterCalled,omitempty"`
 	WalletDeployed *struct {
 		Canister principal.Principal `ic:"canister" json:"canister"`
-	} `ic:"WalletDeployed,variant"`
+	} `ic:"WalletDeployed,variant" json:"WalletDeployed,omitempty"`
 }
 
 type EventKind128 struct {
@@ -614,32 +614,32 @@ type EventKind128 struct {
 		To     principal.Principal `ic:"to" json:"to"`
 		Amount idl.Nat             `ic:"amount" json:"amount"`
 		Refund idl.Nat             `ic:"refund" json:"refund"`
-	} `ic:"CyclesSent,variant"`
+	} `ic:"CyclesSent,variant" json:"CyclesSent,omitempty"`
 	CyclesReceived *struct {
 		From   principal.Principal `ic:"from" json:"from"`
 		Amount idl.Nat             `ic:"amount" json:"amount"`
 		Memo   *string             `ic:"memo,omitempty" json:"memo,omitempty"`
-	} `ic:"CyclesReceived,variant"`
+	} `ic:"CyclesReceived,variant" json:"CyclesReceived,omitempty"`
 	AddressAdded *struct {
 		Id   principal.Principal `ic:"id" json:"id"`
 		Name *string             `ic:"name,omitempty" json:"name,omitempty"`
 		Role Role                `ic:"role" json:"role"`
-	} `ic:"AddressAdded,variant"`
+	} `ic:"AddressAdded,variant" json:"AddressAdded,omitempty"`
 	AddressRemoved *struct {
 		Id principal.Principal `ic:"id" json:"id"`
-	} `ic:"AddressRemoved,variant"`
+	} `ic:"AddressRemoved,variant" json:"AddressRemoved,omitempty"`
 	CanisterCreated *struct {
 		Canister principal.Principal `ic:"canister" json:"canister"`
 		Cycles   idl.Nat             `ic:"cycles" json:"cycles"`
-	} `ic:"CanisterCreated,variant"`
+	} `ic:"CanisterCreated,variant" json:"CanisterCreated,omitempty"`
 	CanisterCalled *struct {
 		Canister   principal.Principal `ic:"canister" json:"canister"`
 		MethodName string              `ic:"method_name" json:"method_name"`
 		Cycles     idl.Nat             `ic:"cycles" json:"cycles"`
-	} `ic:"CanisterCalled,variant"`
+	} `ic:"CanisterCalled,variant" json:"CanisterCalled,omitempty"`
 	WalletDeployed *struct {
 		Canister principal.Principal `ic:"canister" json:"canister"`
-	} `ic:"WalletDeployed,variant"`
+	} `ic:"WalletDeployed,variant" json:"WalletDeployed,omitempty"`
 }
 
 type HeaderField struct {
@@ -662,9 +662,9 @@ type HttpResponse struct {
 }
 
 type Kind struct {
-	Unknown  *idl.Null `ic:"Unknown,variant"`
-	User     *idl.Null `ic:"User,variant"`
-	Canister *idl.Null `ic:"Canister,variant"`
+	Unknown  *idl.Null `ic:"Unknown,variant" json:"Unknown,omitempty"`
+	User     *idl.Null `ic:"User,variant" json:"User,omitempty"`
+	Canister *idl.Null `ic:"Canister,variant" json:"Canister,omitempty"`
 }
 
 type ManagedCanisterEvent struct {
@@ -683,28 +683,28 @@ type ManagedCanisterEventKind struct {
 	CyclesSent *struct {
 		Amount uint64 `ic:"amount" json:"amount"`
 		Refund uint64 `ic:"refund" json:"refund"`
-	} `ic:"CyclesSent,variant"`
+	} `ic:"CyclesSent,variant" json:"CyclesSent,omitempty"`
 	Called *struct {
 		MethodName string `ic:"method_name" json:"method_name"`
 		Cycles     uint64 `ic:"cycles" json:"cycles"`
-	} `ic:"Called,variant"`
+	} `ic:"Called,variant" json:"Called,omitempty"`
 	Created *struct {
 		Cycles uint64 `ic:"cycles" json:"cycles"`
-	} `ic:"Created,variant"`
+	} `ic:"Created,variant" json:"Created,omitempty"`
 }
 
 type ManagedCanisterEventKind128 struct {
 	CyclesSent *struct {
 		Amount idl.Nat `ic:"amount" json:"amount"`
 		Refund idl.Nat `ic:"refund" json:"refund"`
-	} `ic:"CyclesSent,variant"`
+	} `ic:"CyclesSent,variant" json:"CyclesSent,omitempty"`
 	Called *struct {
 		MethodName string  `ic:"method_name" json:"method_name"`
 		Cycles     idl.Nat `ic:"cycles" json:"cycles"`
-	} `ic:"Called,variant"`
+	} `ic:"Called,variant" json:"Called,omitempty"`
 	Created *struct {
 		Cycles idl.Nat `ic:"cycles" json:"cycles"`
-	} `ic:"Created,variant"`
+	} `ic:"Created,variant" json:"Created,omitempty"`
 }
 
 type ManagedCanisterInfo struct {
@@ -718,9 +718,9 @@ type ReceiveOptions struct {
 }
 
 type Role struct {
-	Contact    *idl.Null `ic:"Contact,variant"`
-	Custodian  *idl.Null `ic:"Custodian,variant"`
-	Controller *idl.Null `ic:"Controller,variant"`
+	Contact    *idl.Null `ic:"Contact,variant" json:"Contact,omitempty"`
+	Custodian  *idl.Null `ic:"Custodian,variant" json:"Custodian,omitempty"`
+	Controller *idl.Null `ic:"Controller,variant" json:"Controller,omitempty"`
 }
 
 type StreamingCallbackHttpResponse struct {
@@ -732,35 +732,35 @@ type StreamingStrategy struct {
 	Callback *struct {
 		Callback idl.Function `ic:"callback" json:"callback"`
 		Token    Token        `ic:"token" json:"token"`
-	} `ic:"Callback,variant"`
+	} `ic:"Callback,variant" json:"Callback,omitempty"`
 }
 
 type Token struct {
 }
 
 type WalletResult struct {
-	Ok  *idl.Null `ic:"Ok,variant"`
-	Err *string   `ic:"Err,variant"`
+	Ok  *idl.Null `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string   `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type WalletResultCall struct {
 	Ok *struct {
 		Return []byte `ic:"return" json:"return"`
-	} `ic:"Ok,variant"`
-	Err *string `ic:"Err,variant"`
+	} `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type WalletResultCallWithMaxCycles struct {
 	Ok *struct {
 		Return         []byte  `ic:"return" json:"return"`
 		AttachedCycles idl.Nat `ic:"attached_cycles" json:"attached_cycles"`
-	} `ic:"Ok,variant"`
-	Err *string `ic:"Err,variant"`
+	} `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type WalletResultCreate struct {
 	Ok *struct {
 		CanisterId principal.Principal `ic:"canister_id" json:"canister_id"`
-	} `ic:"Ok,variant"`
-	Err *string `ic:"Err,variant"`
+	} `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string `ic:"Err,variant" json:"Err,omitempty"`
 }

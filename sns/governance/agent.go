@@ -14,30 +14,30 @@ type Account struct {
 }
 
 type Action struct {
-	ManageNervousSystemParameters      *NervousSystemParameters    `ic:"ManageNervousSystemParameters,variant"`
-	AddGenericNervousSystemFunction    *NervousSystemFunction      `ic:"AddGenericNervousSystemFunction,variant"`
-	ManageDappCanisterSettings         *ManageDappCanisterSettings `ic:"ManageDappCanisterSettings,variant"`
-	RemoveGenericNervousSystemFunction *uint64                     `ic:"RemoveGenericNervousSystemFunction,variant"`
+	ManageNervousSystemParameters      *NervousSystemParameters    `ic:"ManageNervousSystemParameters,variant" json:"ManageNervousSystemParameters,omitempty"`
+	AddGenericNervousSystemFunction    *NervousSystemFunction      `ic:"AddGenericNervousSystemFunction,variant" json:"AddGenericNervousSystemFunction,omitempty"`
+	ManageDappCanisterSettings         *ManageDappCanisterSettings `ic:"ManageDappCanisterSettings,variant" json:"ManageDappCanisterSettings,omitempty"`
+	RemoveGenericNervousSystemFunction *uint64                     `ic:"RemoveGenericNervousSystemFunction,variant" json:"RemoveGenericNervousSystemFunction,omitempty"`
 	UpgradeSnsToNextVersion            *struct {
-	} `ic:"UpgradeSnsToNextVersion,variant"`
-	AdvanceSnsTargetVersion      *AdvanceSnsTargetVersion      `ic:"AdvanceSnsTargetVersion,variant"`
-	RegisterDappCanisters        *RegisterDappCanisters        `ic:"RegisterDappCanisters,variant"`
-	TransferSnsTreasuryFunds     *TransferSnsTreasuryFunds     `ic:"TransferSnsTreasuryFunds,variant"`
-	UpgradeSnsControlledCanister *UpgradeSnsControlledCanister `ic:"UpgradeSnsControlledCanister,variant"`
-	DeregisterDappCanisters      *DeregisterDappCanisters      `ic:"DeregisterDappCanisters,variant"`
-	MintSnsTokens                *MintSnsTokens                `ic:"MintSnsTokens,variant"`
+	} `ic:"UpgradeSnsToNextVersion,variant" json:"UpgradeSnsToNextVersion,omitempty"`
+	AdvanceSnsTargetVersion      *AdvanceSnsTargetVersion      `ic:"AdvanceSnsTargetVersion,variant" json:"AdvanceSnsTargetVersion,omitempty"`
+	RegisterDappCanisters        *RegisterDappCanisters        `ic:"RegisterDappCanisters,variant" json:"RegisterDappCanisters,omitempty"`
+	TransferSnsTreasuryFunds     *TransferSnsTreasuryFunds     `ic:"TransferSnsTreasuryFunds,variant" json:"TransferSnsTreasuryFunds,omitempty"`
+	UpgradeSnsControlledCanister *UpgradeSnsControlledCanister `ic:"UpgradeSnsControlledCanister,variant" json:"UpgradeSnsControlledCanister,omitempty"`
+	DeregisterDappCanisters      *DeregisterDappCanisters      `ic:"DeregisterDappCanisters,variant" json:"DeregisterDappCanisters,omitempty"`
+	MintSnsTokens                *MintSnsTokens                `ic:"MintSnsTokens,variant" json:"MintSnsTokens,omitempty"`
 	Unspecified                  *struct {
-	} `ic:"Unspecified,variant"`
-	ManageSnsMetadata                   *ManageSnsMetadata                   `ic:"ManageSnsMetadata,variant"`
-	ExecuteGenericNervousSystemFunction *ExecuteGenericNervousSystemFunction `ic:"ExecuteGenericNervousSystemFunction,variant"`
-	ManageLedgerParameters              *ManageLedgerParameters              `ic:"ManageLedgerParameters,variant"`
-	Motion                              *Motion                              `ic:"Motion,variant"`
+	} `ic:"Unspecified,variant" json:"Unspecified,omitempty"`
+	ManageSnsMetadata                   *ManageSnsMetadata                   `ic:"ManageSnsMetadata,variant" json:"ManageSnsMetadata,omitempty"`
+	ExecuteGenericNervousSystemFunction *ExecuteGenericNervousSystemFunction `ic:"ExecuteGenericNervousSystemFunction,variant" json:"ExecuteGenericNervousSystemFunction,omitempty"`
+	ManageLedgerParameters              *ManageLedgerParameters              `ic:"ManageLedgerParameters,variant" json:"ManageLedgerParameters,omitempty"`
+	Motion                              *Motion                              `ic:"Motion,variant" json:"Motion,omitempty"`
 }
 
 type ActionAuxiliary struct {
-	TransferSnsTreasuryFunds *MintSnsTokensActionAuxiliary           `ic:"TransferSnsTreasuryFunds,variant"`
-	MintSnsTokens            *MintSnsTokensActionAuxiliary           `ic:"MintSnsTokens,variant"`
-	AdvanceSnsTargetVersion  *AdvanceSnsTargetVersionActionAuxiliary `ic:"AdvanceSnsTargetVersion,variant"`
+	TransferSnsTreasuryFunds *MintSnsTokensActionAuxiliary           `ic:"TransferSnsTreasuryFunds,variant" json:"TransferSnsTreasuryFunds,omitempty"`
+	MintSnsTokens            *MintSnsTokensActionAuxiliary           `ic:"MintSnsTokens,variant" json:"MintSnsTokens,omitempty"`
+	AdvanceSnsTargetVersion  *AdvanceSnsTargetVersionActionAuxiliary `ic:"AdvanceSnsTargetVersion,variant" json:"AdvanceSnsTargetVersion,omitempty"`
 }
 
 type AddNeuronPermissions struct {
@@ -332,6 +332,20 @@ func (a Agent) ListProposals(arg0 ListProposals) (*ListProposalsResponse, error)
 	return &r0, nil
 }
 
+// ListTopics calls the "list_topics" method on the "governance" canister.
+func (a Agent) ListTopics(arg0 ListTopicsRequest) (*ListTopicsResponse, error) {
+	var r0 ListTopicsResponse
+	if err := a.Agent.Query(
+		a.CanisterId,
+		"list_topics",
+		[]any{arg0},
+		[]any{&r0},
+	); err != nil {
+		return nil, err
+	}
+	return &r0, nil
+}
+
 // ManageNeuron calls the "manage_neuron" method on the "governance" canister.
 func (a Agent) ManageNeuron(arg0 ManageNeuron) (*ManageNeuronResponse, error) {
 	var r0 ManageNeuronResponse
@@ -390,9 +404,9 @@ type Ballot struct {
 }
 
 type By struct {
-	MemoAndController *MemoAndController `ic:"MemoAndController,variant"`
+	MemoAndController *MemoAndController `ic:"MemoAndController,variant" json:"MemoAndController,omitempty"`
 	NeuronId          *struct {
-	} `ic:"NeuronId,variant"`
+	} `ic:"NeuronId,variant" json:"NeuronId,omitempty"`
 }
 
 type CachedUpgradeSteps struct {
@@ -408,16 +422,23 @@ type CanisterStatusResultV2 struct {
 	Settings               DefiniteCanisterSettingsArgs `ic:"settings" json:"settings"`
 	IdleCyclesBurnedPerDay idl.Nat                      `ic:"idle_cycles_burned_per_day" json:"idle_cycles_burned_per_day"`
 	ModuleHash             *[]byte                      `ic:"module_hash,omitempty" json:"module_hash,omitempty"`
+	QueryStats             *QueryStats                  `ic:"query_stats,omitempty" json:"query_stats,omitempty"`
 }
 
 type CanisterStatusType struct {
-	Stopped  *idl.Null `ic:"stopped,variant"`
-	Stopping *idl.Null `ic:"stopping,variant"`
-	Running  *idl.Null `ic:"running,variant"`
+	Stopped  *idl.Null `ic:"stopped,variant" json:"stopped,omitempty"`
+	Stopping *idl.Null `ic:"stopping,variant" json:"stopping,omitempty"`
+	Running  *idl.Null `ic:"running,variant" json:"running,omitempty"`
 }
 
 type ChangeAutoStakeMaturity struct {
 	RequestedSettingForAutoStakeMaturity bool `ic:"requested_setting_for_auto_stake_maturity" json:"requested_setting_for_auto_stake_maturity"`
+}
+
+type ChunkedCanisterWasm struct {
+	WasmModuleHash  []byte               `ic:"wasm_module_hash" json:"wasm_module_hash"`
+	StoreCanisterId *principal.Principal `ic:"store_canister_id,omitempty" json:"store_canister_id,omitempty"`
+	ChunkHashesList [][]byte             `ic:"chunk_hashes_list" json:"chunk_hashes_list"`
 }
 
 type ClaimOrRefresh struct {
@@ -437,8 +458,8 @@ type ClaimSwapNeuronsResponse struct {
 }
 
 type ClaimSwapNeuronsResult struct {
-	Ok  *ClaimedSwapNeurons `ic:"Ok,variant"`
-	Err *int32              `ic:"Err,variant"`
+	Ok  *ClaimedSwapNeurons `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *int32              `ic:"Err,variant" json:"Err,omitempty"`
 }
 
 type ClaimedSwapNeurons struct {
@@ -446,56 +467,56 @@ type ClaimedSwapNeurons struct {
 }
 
 type Command struct {
-	Split                   *Split                   `ic:"Split,variant"`
-	Follow                  *Follow                  `ic:"Follow,variant"`
-	DisburseMaturity        *DisburseMaturity        `ic:"DisburseMaturity,variant"`
-	ClaimOrRefresh          *ClaimOrRefresh          `ic:"ClaimOrRefresh,variant"`
-	Configure               *Configure               `ic:"Configure,variant"`
-	RegisterVote            *RegisterVote            `ic:"RegisterVote,variant"`
-	MakeProposal            *Proposal                `ic:"MakeProposal,variant"`
-	StakeMaturity           *StakeMaturity           `ic:"StakeMaturity,variant"`
-	RemoveNeuronPermissions *RemoveNeuronPermissions `ic:"RemoveNeuronPermissions,variant"`
-	AddNeuronPermissions    *AddNeuronPermissions    `ic:"AddNeuronPermissions,variant"`
-	MergeMaturity           *MergeMaturity           `ic:"MergeMaturity,variant"`
-	Disburse                *Disburse                `ic:"Disburse,variant"`
+	Split                   *Split                   `ic:"Split,variant" json:"Split,omitempty"`
+	Follow                  *Follow                  `ic:"Follow,variant" json:"Follow,omitempty"`
+	DisburseMaturity        *DisburseMaturity        `ic:"DisburseMaturity,variant" json:"DisburseMaturity,omitempty"`
+	ClaimOrRefresh          *ClaimOrRefresh          `ic:"ClaimOrRefresh,variant" json:"ClaimOrRefresh,omitempty"`
+	Configure               *Configure               `ic:"Configure,variant" json:"Configure,omitempty"`
+	RegisterVote            *RegisterVote            `ic:"RegisterVote,variant" json:"RegisterVote,omitempty"`
+	MakeProposal            *Proposal                `ic:"MakeProposal,variant" json:"MakeProposal,omitempty"`
+	StakeMaturity           *StakeMaturity           `ic:"StakeMaturity,variant" json:"StakeMaturity,omitempty"`
+	RemoveNeuronPermissions *RemoveNeuronPermissions `ic:"RemoveNeuronPermissions,variant" json:"RemoveNeuronPermissions,omitempty"`
+	AddNeuronPermissions    *AddNeuronPermissions    `ic:"AddNeuronPermissions,variant" json:"AddNeuronPermissions,omitempty"`
+	MergeMaturity           *MergeMaturity           `ic:"MergeMaturity,variant" json:"MergeMaturity,omitempty"`
+	Disburse                *Disburse                `ic:"Disburse,variant" json:"Disburse,omitempty"`
 }
 
 type Command1 struct {
-	Error  *GovernanceError `ic:"Error,variant"`
-	Split  *SplitResponse   `ic:"Split,variant"`
+	Error  *GovernanceError `ic:"Error,variant" json:"Error,omitempty"`
+	Split  *SplitResponse   `ic:"Split,variant" json:"Split,omitempty"`
 	Follow *struct {
-	} `ic:"Follow,variant"`
-	DisburseMaturity *DisburseMaturityResponse `ic:"DisburseMaturity,variant"`
-	ClaimOrRefresh   *ClaimOrRefreshResponse   `ic:"ClaimOrRefresh,variant"`
+	} `ic:"Follow,variant" json:"Follow,omitempty"`
+	DisburseMaturity *DisburseMaturityResponse `ic:"DisburseMaturity,variant" json:"DisburseMaturity,omitempty"`
+	ClaimOrRefresh   *ClaimOrRefreshResponse   `ic:"ClaimOrRefresh,variant" json:"ClaimOrRefresh,omitempty"`
 	Configure        *struct {
-	} `ic:"Configure,variant"`
+	} `ic:"Configure,variant" json:"Configure,omitempty"`
 	RegisterVote *struct {
-	} `ic:"RegisterVote,variant"`
-	MakeProposal           *GetProposal `ic:"MakeProposal,variant"`
+	} `ic:"RegisterVote,variant" json:"RegisterVote,omitempty"`
+	MakeProposal           *GetProposal `ic:"MakeProposal,variant" json:"MakeProposal,omitempty"`
 	RemoveNeuronPermission *struct {
-	} `ic:"RemoveNeuronPermission,variant"`
-	StakeMaturity       *StakeMaturityResponse `ic:"StakeMaturity,variant"`
-	MergeMaturity       *MergeMaturityResponse `ic:"MergeMaturity,variant"`
-	Disburse            *DisburseResponse      `ic:"Disburse,variant"`
+	} `ic:"RemoveNeuronPermission,variant" json:"RemoveNeuronPermission,omitempty"`
+	StakeMaturity       *StakeMaturityResponse `ic:"StakeMaturity,variant" json:"StakeMaturity,omitempty"`
+	MergeMaturity       *MergeMaturityResponse `ic:"MergeMaturity,variant" json:"MergeMaturity,omitempty"`
+	Disburse            *DisburseResponse      `ic:"Disburse,variant" json:"Disburse,omitempty"`
 	AddNeuronPermission *struct {
-	} `ic:"AddNeuronPermission,variant"`
+	} `ic:"AddNeuronPermission,variant" json:"AddNeuronPermission,omitempty"`
 }
 
 type Command2 struct {
-	Split            *Split            `ic:"Split,variant"`
-	Follow           *Follow           `ic:"Follow,variant"`
-	DisburseMaturity *DisburseMaturity `ic:"DisburseMaturity,variant"`
-	Configure        *Configure        `ic:"Configure,variant"`
-	RegisterVote     *RegisterVote     `ic:"RegisterVote,variant"`
+	Split            *Split            `ic:"Split,variant" json:"Split,omitempty"`
+	Follow           *Follow           `ic:"Follow,variant" json:"Follow,omitempty"`
+	DisburseMaturity *DisburseMaturity `ic:"DisburseMaturity,variant" json:"DisburseMaturity,omitempty"`
+	Configure        *Configure        `ic:"Configure,variant" json:"Configure,omitempty"`
+	RegisterVote     *RegisterVote     `ic:"RegisterVote,variant" json:"RegisterVote,omitempty"`
 	SyncCommand      *struct {
-	} `ic:"SyncCommand,variant"`
-	MakeProposal             *Proposal                 `ic:"MakeProposal,variant"`
-	FinalizeDisburseMaturity *FinalizeDisburseMaturity `ic:"FinalizeDisburseMaturity,variant"`
-	ClaimOrRefreshNeuron     *ClaimOrRefresh           `ic:"ClaimOrRefreshNeuron,variant"`
-	RemoveNeuronPermissions  *RemoveNeuronPermissions  `ic:"RemoveNeuronPermissions,variant"`
-	AddNeuronPermissions     *AddNeuronPermissions     `ic:"AddNeuronPermissions,variant"`
-	MergeMaturity            *MergeMaturity            `ic:"MergeMaturity,variant"`
-	Disburse                 *Disburse                 `ic:"Disburse,variant"`
+	} `ic:"SyncCommand,variant" json:"SyncCommand,omitempty"`
+	MakeProposal             *Proposal                 `ic:"MakeProposal,variant" json:"MakeProposal,omitempty"`
+	FinalizeDisburseMaturity *FinalizeDisburseMaturity `ic:"FinalizeDisburseMaturity,variant" json:"FinalizeDisburseMaturity,omitempty"`
+	ClaimOrRefreshNeuron     *ClaimOrRefresh           `ic:"ClaimOrRefreshNeuron,variant" json:"ClaimOrRefreshNeuron,omitempty"`
+	RemoveNeuronPermissions  *RemoveNeuronPermissions  `ic:"RemoveNeuronPermissions,variant" json:"RemoveNeuronPermissions,omitempty"`
+	AddNeuronPermissions     *AddNeuronPermissions     `ic:"AddNeuronPermissions,variant" json:"AddNeuronPermissions,omitempty"`
+	MergeMaturity            *MergeMaturity            `ic:"MergeMaturity,variant" json:"MergeMaturity,omitempty"`
+	Disburse                 *Disburse                 `ic:"Disburse,variant" json:"Disburse,omitempty"`
 }
 
 type Configure struct {
@@ -514,11 +535,12 @@ type DefaultFollowees struct {
 }
 
 type DefiniteCanisterSettingsArgs struct {
-	FreezingThreshold idl.Nat               `ic:"freezing_threshold" json:"freezing_threshold"`
-	Controllers       []principal.Principal `ic:"controllers" json:"controllers"`
-	WasmMemoryLimit   *idl.Nat              `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
-	MemoryAllocation  idl.Nat               `ic:"memory_allocation" json:"memory_allocation"`
-	ComputeAllocation idl.Nat               `ic:"compute_allocation" json:"compute_allocation"`
+	FreezingThreshold   idl.Nat               `ic:"freezing_threshold" json:"freezing_threshold"`
+	Controllers         []principal.Principal `ic:"controllers" json:"controllers"`
+	WasmMemoryLimit     *idl.Nat              `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
+	MemoryAllocation    idl.Nat               `ic:"memory_allocation" json:"memory_allocation"`
+	ComputeAllocation   idl.Nat               `ic:"compute_allocation" json:"compute_allocation"`
+	WasmMemoryThreshold *idl.Nat              `ic:"wasm_memory_threshold,omitempty" json:"wasm_memory_threshold,omitempty"`
 }
 
 type DeregisterDappCanisters struct {
@@ -553,8 +575,8 @@ type DisburseResponse struct {
 }
 
 type DissolveState struct {
-	DissolveDelaySeconds          *uint64 `ic:"DissolveDelaySeconds,variant"`
-	WhenDissolvedTimestampSeconds *uint64 `ic:"WhenDissolvedTimestampSeconds,variant"`
+	DissolveDelaySeconds          *uint64 `ic:"DissolveDelaySeconds,variant" json:"DissolveDelaySeconds,omitempty"`
+	WhenDissolvedTimestampSeconds *uint64 `ic:"WhenDissolvedTimestampSeconds,variant" json:"WhenDissolvedTimestampSeconds,omitempty"`
 }
 
 type ExecuteGenericNervousSystemFunction struct {
@@ -578,8 +600,8 @@ type Followees struct {
 
 type FunctionType struct {
 	NativeNervousSystemFunction *struct {
-	} `ic:"NativeNervousSystemFunction,variant"`
-	GenericNervousSystemFunction *GenericNervousSystemFunction `ic:"GenericNervousSystemFunction,variant"`
+	} `ic:"NativeNervousSystemFunction,variant" json:"NativeNervousSystemFunction,omitempty"`
+	GenericNervousSystemFunction *GenericNervousSystemFunction `ic:"GenericNervousSystemFunction,variant" json:"GenericNervousSystemFunction,omitempty"`
 }
 
 type GenericNervousSystemFunction struct {
@@ -587,6 +609,7 @@ type GenericNervousSystemFunction struct {
 	TargetCanisterId    *principal.Principal `ic:"target_canister_id,omitempty" json:"target_canister_id,omitempty"`
 	ValidatorMethodName *string              `ic:"validator_method_name,omitempty" json:"validator_method_name,omitempty"`
 	TargetMethodName    *string              `ic:"target_method_name,omitempty" json:"target_method_name,omitempty"`
+	Topic               *Topic               `ic:"topic,omitempty" json:"topic,omitempty"`
 }
 
 type GetMaturityModulationResponse struct {
@@ -756,6 +779,14 @@ type ListProposalsResponse struct {
 	Proposals              []ProposalData `ic:"proposals" json:"proposals"`
 }
 
+type ListTopicsRequest struct {
+}
+
+type ListTopicsResponse struct {
+	Topics                 *[]TopicInfo             `ic:"topics,omitempty" json:"topics,omitempty"`
+	UncategorizedFunctions *[]NervousSystemFunction `ic:"uncategorized_functions,omitempty" json:"uncategorized_functions,omitempty"`
+}
+
 type ManageDappCanisterSettings struct {
 	FreezingThreshold   *uint64               `ic:"freezing_threshold,omitempty" json:"freezing_threshold,omitempty"`
 	CanisterIds         []principal.Principal `ic:"canister_ids" json:"canister_ids"`
@@ -764,6 +795,7 @@ type ManageDappCanisterSettings struct {
 	WasmMemoryLimit     *uint64               `ic:"wasm_memory_limit,omitempty" json:"wasm_memory_limit,omitempty"`
 	MemoryAllocation    *uint64               `ic:"memory_allocation,omitempty" json:"memory_allocation,omitempty"`
 	ComputeAllocation   *uint64               `ic:"compute_allocation,omitempty" json:"compute_allocation,omitempty"`
+	WasmMemoryThreshold *uint64               `ic:"wasm_memory_threshold,omitempty" json:"wasm_memory_threshold,omitempty"`
 }
 
 type ManageLedgerParameters struct {
@@ -851,6 +883,7 @@ type NervousSystemParameters struct {
 	VotingRewardsParameters                 *VotingRewardsParameters `ic:"voting_rewards_parameters,omitempty" json:"voting_rewards_parameters,omitempty"`
 	MaturityModulationDisabled              *bool                    `ic:"maturity_modulation_disabled,omitempty" json:"maturity_modulation_disabled,omitempty"`
 	MaxNumberOfPrincipalsPerNeuron          *uint64                  `ic:"max_number_of_principals_per_neuron,omitempty" json:"max_number_of_principals_per_neuron,omitempty"`
+	AutomaticallyAdvanceTargetVersion       *bool                    `ic:"automatically_advance_target_version,omitempty" json:"automatically_advance_target_version,omitempty"`
 }
 
 type Neuron struct {
@@ -926,19 +959,19 @@ type NeuronsFund struct {
 }
 
 type Operation struct {
-	ChangeAutoStakeMaturity *ChangeAutoStakeMaturity `ic:"ChangeAutoStakeMaturity,variant"`
+	ChangeAutoStakeMaturity *ChangeAutoStakeMaturity `ic:"ChangeAutoStakeMaturity,variant" json:"ChangeAutoStakeMaturity,omitempty"`
 	StopDissolving          *struct {
-	} `ic:"StopDissolving,variant"`
+	} `ic:"StopDissolving,variant" json:"StopDissolving,omitempty"`
 	StartDissolving *struct {
-	} `ic:"StartDissolving,variant"`
-	IncreaseDissolveDelay *IncreaseDissolveDelay `ic:"IncreaseDissolveDelay,variant"`
-	SetDissolveTimestamp  *SetDissolveTimestamp  `ic:"SetDissolveTimestamp,variant"`
+	} `ic:"StartDissolving,variant" json:"StartDissolving,omitempty"`
+	IncreaseDissolveDelay *IncreaseDissolveDelay `ic:"IncreaseDissolveDelay,variant" json:"IncreaseDissolveDelay,omitempty"`
+	SetDissolveTimestamp  *SetDissolveTimestamp  `ic:"SetDissolveTimestamp,variant" json:"SetDissolveTimestamp,omitempty"`
 }
 
 type Participant struct {
-	NeuronsFund *NeuronsFund `ic:"NeuronsFund,variant"`
+	NeuronsFund *NeuronsFund `ic:"NeuronsFund,variant" json:"NeuronsFund,omitempty"`
 	Direct      *struct {
-	} `ic:"Direct,variant"`
+	} `ic:"Direct,variant" json:"Direct,omitempty"`
 }
 
 type PendingVersion struct {
@@ -995,6 +1028,13 @@ type ProposalId struct {
 	Id uint64 `ic:"id" json:"id"`
 }
 
+type QueryStats struct {
+	NumCallsTotal             *idl.Nat `ic:"num_calls_total,omitempty" json:"num_calls_total,omitempty"`
+	NumInstructionsTotal      *idl.Nat `ic:"num_instructions_total,omitempty" json:"num_instructions_total,omitempty"`
+	RequestPayloadBytesTotal  *idl.Nat `ic:"request_payload_bytes_total,omitempty" json:"request_payload_bytes_total,omitempty"`
+	ResponsePayloadBytesTotal *idl.Nat `ic:"response_payload_bytes_total,omitempty" json:"response_payload_bytes_total,omitempty"`
+}
+
 type RegisterDappCanisters struct {
 	CanisterIds []principal.Principal `ic:"canister_ids" json:"canister_ids"`
 }
@@ -1010,13 +1050,13 @@ type RemoveNeuronPermissions struct {
 }
 
 type Result struct {
-	Error  *GovernanceError `ic:"Error,variant"`
-	Neuron *Neuron          `ic:"Neuron,variant"`
+	Error  *GovernanceError `ic:"Error,variant" json:"Error,omitempty"`
+	Neuron *Neuron          `ic:"Neuron,variant" json:"Neuron,omitempty"`
 }
 
 type Result1 struct {
-	Error    *GovernanceError `ic:"Error,variant"`
-	Proposal *ProposalData    `ic:"Proposal,variant"`
+	Error    *GovernanceError `ic:"Error,variant" json:"Error,omitempty"`
+	Proposal *ProposalData    `ic:"Proposal,variant" json:"Proposal,omitempty"`
 }
 
 type RewardEvent struct {
@@ -1087,8 +1127,9 @@ type TargetVersionReset struct {
 }
 
 type TargetVersionSet struct {
-	NewTargetVersion *Version `ic:"new_target_version,omitempty" json:"new_target_version,omitempty"`
-	OldTargetVersion *Version `ic:"old_target_version,omitempty" json:"old_target_version,omitempty"`
+	NewTargetVersion        *Version `ic:"new_target_version,omitempty" json:"new_target_version,omitempty"`
+	OldTargetVersion        *Version `ic:"old_target_version,omitempty" json:"old_target_version,omitempty"`
+	IsAdvancedAutomatically *bool    `ic:"is_advanced_automatically,omitempty" json:"is_advanced_automatically,omitempty"`
 }
 
 type Timers struct {
@@ -1099,6 +1140,25 @@ type Timers struct {
 
 type Tokens struct {
 	E8s *uint64 `ic:"e8s,omitempty" json:"e8s,omitempty"`
+}
+
+type Topic struct {
+	DaoCommunitySettings     *idl.Null `ic:"DaoCommunitySettings,variant" json:"DaoCommunitySettings,omitempty"`
+	SnsFrameworkManagement   *idl.Null `ic:"SnsFrameworkManagement,variant" json:"SnsFrameworkManagement,omitempty"`
+	DappCanisterManagement   *idl.Null `ic:"DappCanisterManagement,variant" json:"DappCanisterManagement,omitempty"`
+	ApplicationBusinessLogic *idl.Null `ic:"ApplicationBusinessLogic,variant" json:"ApplicationBusinessLogic,omitempty"`
+	Governance               *idl.Null `ic:"Governance,variant" json:"Governance,omitempty"`
+	TreasuryAssetManagement  *idl.Null `ic:"TreasuryAssetManagement,variant" json:"TreasuryAssetManagement,omitempty"`
+	CriticalDappOperations   *idl.Null `ic:"CriticalDappOperations,variant" json:"CriticalDappOperations,omitempty"`
+}
+
+type TopicInfo struct {
+	Topic           *Topic                   `ic:"topic,omitempty" json:"topic,omitempty"`
+	Name            *string                  `ic:"name,omitempty" json:"name,omitempty"`
+	Description     *string                  `ic:"description,omitempty" json:"description,omitempty"`
+	NativeFunctions *[]NervousSystemFunction `ic:"native_functions,omitempty" json:"native_functions,omitempty"`
+	CustomFunctions *[]NervousSystemFunction `ic:"custom_functions,omitempty" json:"custom_functions,omitempty"`
+	IsCritical      *bool                    `ic:"is_critical,omitempty" json:"is_critical,omitempty"`
 }
 
 type TransferSnsTreasuryFunds struct {
@@ -1122,12 +1182,12 @@ type UpgradeJournal struct {
 
 type UpgradeJournalEntry struct {
 	Event *struct {
-		UpgradeStepsRefreshed *UpgradeStepsRefreshed `ic:"UpgradeStepsRefreshed,variant"`
-		UpgradeStepsReset     *UpgradeStepsReset     `ic:"UpgradeStepsReset,variant"`
-		TargetVersionSet      *TargetVersionSet      `ic:"TargetVersionSet,variant"`
-		TargetVersionReset    *TargetVersionReset    `ic:"TargetVersionReset,variant"`
-		UpgradeStarted        *UpgradeStarted        `ic:"UpgradeStarted,variant"`
-		UpgradeOutcome        *UpgradeOutcome        `ic:"UpgradeOutcome,variant"`
+		UpgradeStepsRefreshed *UpgradeStepsRefreshed `ic:"UpgradeStepsRefreshed,variant" json:"UpgradeStepsRefreshed,omitempty"`
+		UpgradeStepsReset     *UpgradeStepsReset     `ic:"UpgradeStepsReset,variant" json:"UpgradeStepsReset,omitempty"`
+		TargetVersionSet      *TargetVersionSet      `ic:"TargetVersionSet,variant" json:"TargetVersionSet,omitempty"`
+		TargetVersionReset    *TargetVersionReset    `ic:"TargetVersionReset,variant" json:"TargetVersionReset,omitempty"`
+		UpgradeStarted        *UpgradeStarted        `ic:"UpgradeStarted,variant" json:"UpgradeStarted,omitempty"`
+		UpgradeOutcome        *UpgradeOutcome        `ic:"UpgradeOutcome,variant" json:"UpgradeOutcome,omitempty"`
 	} `ic:"event,omitempty" json:"event,omitempty"`
 	TimestampSeconds *uint64 `ic:"timestamp_seconds,omitempty" json:"timestamp_seconds,omitempty"`
 }
@@ -1136,31 +1196,32 @@ type UpgradeOutcome struct {
 	HumanReadable *string `ic:"human_readable,omitempty" json:"human_readable,omitempty"`
 	Status        *struct {
 		Success *struct {
-		} `ic:"Success,variant"`
+		} `ic:"Success,variant" json:"Success,omitempty"`
 		Timeout *struct {
-		} `ic:"Timeout,variant"`
+		} `ic:"Timeout,variant" json:"Timeout,omitempty"`
 		InvalidState *struct {
 			Version *Version `ic:"version,omitempty" json:"version,omitempty"`
-		} `ic:"InvalidState,variant"`
+		} `ic:"InvalidState,variant" json:"InvalidState,omitempty"`
 		ExternalFailure *struct {
-		} `ic:"ExternalFailure,variant"`
+		} `ic:"ExternalFailure,variant" json:"ExternalFailure,omitempty"`
 	} `ic:"status,omitempty" json:"status,omitempty"`
 }
 
 type UpgradeSnsControlledCanister struct {
-	NewCanisterWasm    []byte               `ic:"new_canister_wasm" json:"new_canister_wasm"`
-	Mode               *int32               `ic:"mode,omitempty" json:"mode,omitempty"`
-	CanisterId         *principal.Principal `ic:"canister_id,omitempty" json:"canister_id,omitempty"`
-	CanisterUpgradeArg *[]byte              `ic:"canister_upgrade_arg,omitempty" json:"canister_upgrade_arg,omitempty"`
+	NewCanisterWasm     []byte               `ic:"new_canister_wasm" json:"new_canister_wasm"`
+	ChunkedCanisterWasm *ChunkedCanisterWasm `ic:"chunked_canister_wasm,omitempty" json:"chunked_canister_wasm,omitempty"`
+	Mode                *int32               `ic:"mode,omitempty" json:"mode,omitempty"`
+	CanisterId          *principal.Principal `ic:"canister_id,omitempty" json:"canister_id,omitempty"`
+	CanisterUpgradeArg  *[]byte              `ic:"canister_upgrade_arg,omitempty" json:"canister_upgrade_arg,omitempty"`
 }
 
 type UpgradeStarted struct {
 	CurrentVersion  *Version `ic:"current_version,omitempty" json:"current_version,omitempty"`
 	ExpectedVersion *Version `ic:"expected_version,omitempty" json:"expected_version,omitempty"`
 	Reason          *struct {
-		UpgradeSnsToNextVersionProposal *ProposalId `ic:"UpgradeSnsToNextVersionProposal,variant"`
+		UpgradeSnsToNextVersionProposal *ProposalId `ic:"UpgradeSnsToNextVersionProposal,variant" json:"UpgradeSnsToNextVersionProposal,omitempty"`
 		BehindTargetVersion             *struct {
-		} `ic:"BehindTargetVersion,variant"`
+		} `ic:"BehindTargetVersion,variant" json:"BehindTargetVersion,omitempty"`
 	} `ic:"reason,omitempty" json:"reason,omitempty"`
 }
 

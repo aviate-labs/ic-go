@@ -613,19 +613,19 @@ func (a Agent) ValidateTakeOwnership() (*ValidationResult, error) {
 }
 
 type AssetCanisterArgs struct {
-	Init    *InitArgs    `ic:"Init,variant"`
-	Upgrade *UpgradeArgs `ic:"Upgrade,variant"`
+	Init    *InitArgs    `ic:"Init,variant" json:"Init,omitempty"`
+	Upgrade *UpgradeArgs `ic:"Upgrade,variant" json:"Upgrade,omitempty"`
 }
 
 type BatchId = idl.Nat
 
 type BatchOperationKind struct {
-	CreateAsset        *CreateAssetArguments        `ic:"CreateAsset,variant"`
-	SetAssetContent    *SetAssetContentArguments    `ic:"SetAssetContent,variant"`
-	SetAssetProperties *SetAssetPropertiesArguments `ic:"SetAssetProperties,variant"`
-	UnsetAssetContent  *UnsetAssetContentArguments  `ic:"UnsetAssetContent,variant"`
-	DeleteAsset        *DeleteAssetArguments        `ic:"DeleteAsset,variant"`
-	Clear              *ClearArguments              `ic:"Clear,variant"`
+	CreateAsset        *CreateAssetArguments        `ic:"CreateAsset,variant" json:"CreateAsset,omitempty"`
+	SetAssetContent    *SetAssetContentArguments    `ic:"SetAssetContent,variant" json:"SetAssetContent,omitempty"`
+	SetAssetProperties *SetAssetPropertiesArguments `ic:"SetAssetProperties,variant" json:"SetAssetProperties,omitempty"`
+	UnsetAssetContent  *UnsetAssetContentArguments  `ic:"UnsetAssetContent,variant" json:"UnsetAssetContent,omitempty"`
+	DeleteAsset        *DeleteAssetArguments        `ic:"DeleteAsset,variant" json:"DeleteAsset,omitempty"`
+	Clear              *ClearArguments              `ic:"Clear,variant" json:"Clear,omitempty"`
 }
 
 type ChunkId = idl.Nat
@@ -713,9 +713,9 @@ type ListPermitted struct {
 }
 
 type Permission struct {
-	Commit            *idl.Null `ic:"Commit,variant"`
-	ManagePermissions *idl.Null `ic:"ManagePermissions,variant"`
-	Prepare           *idl.Null `ic:"Prepare,variant"`
+	Commit            *idl.Null `ic:"Commit,variant" json:"Commit,omitempty"`
+	ManagePermissions *idl.Null `ic:"ManagePermissions,variant" json:"ManagePermissions,omitempty"`
+	Prepare           *idl.Null `ic:"Prepare,variant" json:"Prepare,omitempty"`
 }
 
 type RevokePermission struct {
@@ -760,7 +760,7 @@ type StreamingStrategy struct {
 	Callback *struct {
 		Callback idl.Function           `ic:"callback" json:"callback"`
 		Token    StreamingCallbackToken `ic:"token" json:"token"`
-	} `ic:"Callback,variant"`
+	} `ic:"Callback,variant" json:"Callback,omitempty"`
 }
 
 type Time = idl.Int
@@ -775,6 +775,6 @@ type UpgradeArgs struct {
 }
 
 type ValidationResult struct {
-	Ok  *string `ic:"Ok,variant"`
-	Err *string `ic:"Err,variant"`
+	Ok  *string `ic:"Ok,variant" json:"Ok,omitempty"`
+	Err *string `ic:"Err,variant" json:"Err,omitempty"`
 }
